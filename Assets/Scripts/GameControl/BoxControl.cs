@@ -4,58 +4,83 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class BoxControl : MonoBehaviour
-{
-
-    private float box_size = 0.5f;
+public class BoxControl : MonoBehaviour{
+    private float one_step = 0.1f;
     private float speed = 1;
 
     private float directionX, directionY;
-    private bool rotateX, rotateY;
-    private bool stopFlag = true;
 
-   
+    private bool isClickedLeftBtn, isClickedRightBtn, isClickedDownBtn;
+    private bool isClickedRotateX, isClickedRotateY;
+    private bool stopFlag = true;
 
     private float angle = 90;
 
     public float xSpeed = 5.0f;
     public float moveTime = 0.05f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-       //rb = GetComponent<Rigidbody2D>();
-        StartCoroutine("RunFadeOut");
+    float fall = 0;
+    public float fallSpeed = 1f;
+
+    void Start(){
+       //StartCoroutine("RunFadeOut");
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
+        isClickedRotateX = CrossPlatformInputManager.GetButtonDown("rotateX");
+        isClickedRotateY = CrossPlatformInputManager.GetButtonDown("rotateY");
 
-        directionX = CrossPlatformInputManager.GetAxis("Horizontal");
-        directionY = CrossPlatformInputManager.GetAxis("Vertical");
+        isClickedLeftBtn = CrossPlatformInputManager.GetButtonDown("GoLeft");
+        isClickedRightBtn = CrossPlatformInputManager.GetButtonDown("GoRight");
+        isClickedDownBtn = CrossPlatformInputManager.GetButtonDown("GoDown");
 
-
-        rotateX = CrossPlatformInputManager.GetButtonDown("rotateX");
-        rotateY = CrossPlatformInputManager.GetButtonDown("rotateY");
-
-        if (rotateY)
-        {
+        // check Button clicked
+        if (isClickedRotateY){
             transform.Rotate(new Vector3(0, angle, 0), Space.Self);
-            CrossPlatformInputManager.SetButtonUp("rotateY");
         }
-        if (rotateX)
-        {
+        else if (isClickedRotateX){
             transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
-            CrossPlatformInputManager.SetButtonUp("rotateX");
         }
+        else if (isClickedLeftBtn){
+            transform.position += new Vector3(-one_step, 0, 0);
 
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(one_step, 0, 0);
+            }
+        }
+        else if (isClickedRightBtn){
+            transform.position += new Vector3(one_step, 0, 0);
+            Debug.Log(transform.position);
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(-one_step, 0, 0);
+            }
+        }
+        else if (isClickedDownBtn){
+            transform.position += new Vector3(0, 0, one_step);
+
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(0, 0, -one_step);
+            }
+        }
+        
+        /*
+        // fall box
+        if(Time.time - fall >= fallSpeed){
+            transform.position += new Vector3(0, 0, one_step);
+
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(0, 0, -one_step);
+            }
+            fall = Time.time;
+        }
+        */
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate(){
         
     }
+
     IEnumerator RunFadeOut()
     {
         bool flag = true;
@@ -94,14 +119,25 @@ public class BoxControl : MonoBehaviour
        
         }
     }
+
+    bool CheckIsValidPosition (){
+        foreach(Transform box in transform){
+            Vector3 pos = FindObjectOfType<GameControl>().Round(box.position);
+            Debug.Log("Round");
+            Debug.Log(pos);
+            if(FindObjectOfType<GameControl>().CheckIsInsideGrid(pos) == false){
+                return false;
+            }
+        }
+        return true;
+    }
+
     void OnTriggerEnter(Collider col)
     {
-        Debug.Log("hello");
         stopFlag = false;
     }
     void OnTriggerStay(Collider col)
     {
-        Debug.Log("hello2");
         stopFlag = false;
     }
 }
