@@ -12,6 +12,7 @@ public class BoxControl : MonoBehaviour
 
     private float directionX, directionY;
     private bool rotateX, rotateY;
+    private bool stopFlag = true;
 
    
 
@@ -30,6 +31,7 @@ public class BoxControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         directionX = CrossPlatformInputManager.GetAxis("Horizontal");
         directionY = CrossPlatformInputManager.GetAxis("Vertical");
 
@@ -62,23 +64,44 @@ public class BoxControl : MonoBehaviour
         { 
             if (flag)
             {
-                Vector3 tmp = new Vector3(0.0f, 0.0f, xSpeed * Time.deltaTime);
-                transform.position += tmp;
-                timeCount++;
-                yield return new WaitForSeconds(0.0f);
-                if(timeCount* Time.deltaTime > moveTime)
+                if (stopFlag)
                 {
-                    flag = false;
-                    timeCount=0;
+                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
+                    transform.position += tmp;
+                    timeCount++;
+                    yield return new WaitForSeconds(0.0f);
+                    if (timeCount * Time.deltaTime > moveTime)
+                    {
+                        flag = false;
+                        timeCount = 0;
+                    }
+                }
+                else
+                {
+                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
+                    transform.position -= tmp;
+                    yield return new WaitForSeconds(0.0f);
+                    break;
                 }
             
             }
             else
             {
+            
                 yield return new WaitForSeconds(1.5f);
                 flag = true;
             }
+       
         }
-   
+    }
+    void OnTriggerEnter(Collider col)
+    {
+        Debug.Log("hello");
+        stopFlag = false;
+    }
+    void OnTriggerStay(Collider col)
+    {
+        Debug.Log("hello2");
+        stopFlag = false;
     }
 }
