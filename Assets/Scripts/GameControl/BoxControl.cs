@@ -5,12 +5,15 @@ using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
 public class BoxControl : MonoBehaviour{
-    private float one_step = 0.1f;
+
+    public bool allowXRotation = true, limitXRotation = false;
+
+    public bool allowYRotation = true, limitYRotation = false;
     private float speed = 1;
 
     private float directionX, directionY;
 
-    private bool isClickedLeftBtn, isClickedRightBtn, isClickedDownBtn;
+    private bool isClickedLeftBtn, isClickedRightBtn, isClickedDownBtn, isClickedUpBtn, isClickedDepthBtn;
     private bool isClickedRotateX, isClickedRotateY;
     private bool stopFlag = true;
 
@@ -34,47 +37,139 @@ public class BoxControl : MonoBehaviour{
         isClickedLeftBtn = CrossPlatformInputManager.GetButtonDown("GoLeft");
         isClickedRightBtn = CrossPlatformInputManager.GetButtonDown("GoRight");
         isClickedDownBtn = CrossPlatformInputManager.GetButtonDown("GoDown");
-
+        isClickedUpBtn = CrossPlatformInputManager.GetButtonDown("GoUp");
+        isClickedDepthBtn = CrossPlatformInputManager.GetButtonDown("GoDepth");
+        
         // check Button clicked
         if (isClickedRotateY){
-            transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+            if(allowYRotation){
+                if(limitYRotation){
+                    if(transform.rotation.eulerAngles.y >= 90){
+                        transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
+                    }
+                    else{
+                        transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+                    }
+                }
+                else{
+                    transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+                }
+
+                if(!CheckIsValidPosition()){
+                    if(limitYRotation){
+                        if(transform.rotation.eulerAngles.y >= 90){
+                            transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
+                        }
+                        else{
+                            transform.Rotate(new Vector3(0, angle, 0), Space.Self);
+                        }
+                    }
+                    else{    
+                        transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
+                    }
+                    
+                }
+            }
         }
         else if (isClickedRotateX){
-            transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
+            if(allowXRotation){
+                if(limitXRotation){
+                    if(transform.rotation.eulerAngles.x >= 90){
+                        transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
+                    }
+                    else{
+                        transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
+                    }
+                }
+                else{
+                    transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
+                }
+
+                if(!CheckIsValidPosition()){
+                    if(limitXRotation){
+                        if(transform.rotation.eulerAngles.x >= 90){
+                            transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
+                        }
+                        else{
+                            transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
+                        }
+                    }
+                    else{    
+                        transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
+                    }
+                    
+                }
+            }
         }
         else if (isClickedLeftBtn){
-            transform.position += new Vector3(-one_step, 0, 0);
-
+            transform.position += new Vector3(-1, 0, 0);
+            
             if(!CheckIsValidPosition()){
-                transform.position += new Vector3(one_step, 0, 0);
+                transform.position += new Vector3(1, 0, 0);
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
             }
         }
         else if (isClickedRightBtn){
-            transform.position += new Vector3(one_step, 0, 0);
-            Debug.Log(transform.position);
+            transform.position += new Vector3(1, 0, 0);
+            
             if(!CheckIsValidPosition()){
-                transform.position += new Vector3(-one_step, 0, 0);
+                transform.position += new Vector3(-1, 0, 0);
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
             }
         }
         else if (isClickedDownBtn){
-            transform.position += new Vector3(0, 0, one_step);
-
+            transform.position += new Vector3(0, -1, 0);
+            
             if(!CheckIsValidPosition()){
-                transform.position += new Vector3(0, 0, -one_step);
+                transform.position += new Vector3(0, 1, 0);
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
+            }
+        }
+        else if (isClickedUpBtn){
+            transform.position += new Vector3(0, 1, 0);
+            
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(0, -1, 0);
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
+            }
+        }
+        else if (isClickedDepthBtn){
+            transform.position += new Vector3(0, 0, 1);
+            
+            if(!CheckIsValidPosition()){
+                transform.position += new Vector3(0, 0, -1);
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
             }
         }
         
-        /*
         // fall box
         if(Time.time - fall >= fallSpeed){
-            transform.position += new Vector3(0, 0, one_step);
+            transform.position += new Vector3(0, 0, 1);
 
             if(!CheckIsValidPosition()){
-                transform.position += new Vector3(0, 0, -one_step);
+                transform.position += new Vector3(0, 0, -1);
+                enabled = false;
+                if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
+                    FindObjectOfType<GameControl>().GameOver();
+                }
+                FindObjectOfType<MakeRandomBox>().makeRandomBox();
+            }
+            else{
+                FindObjectOfType<GameControl>().UpdateGrid(this);
             }
             fall = Time.time;
         }
-        */
+        
     }
 
     private void FixedUpdate(){
@@ -123,9 +218,12 @@ public class BoxControl : MonoBehaviour{
     bool CheckIsValidPosition (){
         foreach(Transform box in transform){
             Vector3 pos = FindObjectOfType<GameControl>().Round(box.position);
-            Debug.Log("Round");
-            Debug.Log(pos);
+            
             if(FindObjectOfType<GameControl>().CheckIsInsideGrid(pos) == false){
+                return false;
+            }
+
+            if(GameControl.grid[(int)pos.x, (int)pos.y, (int)pos.z] != null && GameControl.grid[(int)pos.x, (int)pos.y, (int)pos.z].parent != transform){
                 return false;
             }
         }
