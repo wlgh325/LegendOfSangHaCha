@@ -14,7 +14,7 @@ public class GameControl : MonoBehaviour{
     public static int gridWidth = 16;
     public static int gridHeight = 14;
     //public static int gridDepth = 32;
-    public static int gridDepth = 5;
+    public static int gridDepth = 32;
     public static Transform[,,] grid = new Transform[gridWidth,gridHeight, gridDepth];
 
     void Start(){

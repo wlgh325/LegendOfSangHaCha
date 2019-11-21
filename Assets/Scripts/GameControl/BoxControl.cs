@@ -232,6 +232,7 @@ public class BoxControl : MonoBehaviour{
 
     void OnTriggerEnter(Collider col)
     {
+        
         stopFlag = false;
     }
     void OnTriggerStay(Collider col)

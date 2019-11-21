@@ -1320,27 +1320,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.27
+      value: -0.44369
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 86.940155
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 86.940155
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.23
+      value: 1.3028
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 86.940155
       objectReference: {fileID: 0}
     - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.46
+      value: -2.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400024, guid: 25d71dc4b3299d1419cbef00f279c2ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -927199367670048503, guid: 25d71dc4b3299d1419cbef00f279c2ba,
         type: 3}
@@ -1463,6 +1479,7 @@ MonoBehaviour:
   - {fileID: 675967223715035596, guid: 23dc9cc199f7e094f81b49d2c6787903, type: 3}
   - {fileID: 7001946085826722102, guid: 1735232cd915a7a42b1698f6527dc118, type: 3}
   - {fileID: 19793965460618161, guid: 6d39639a307be6b48b665ffea44ed9ef, type: 3}
+  BoxRange: 
 --- !u!4 &839850914
 Transform:
   m_ObjectHideFlags: 0
