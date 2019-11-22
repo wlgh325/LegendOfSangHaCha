@@ -5,22 +5,21 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour{
     public Slider expBar;
+    /*
     private int[] boxSize = {4, 6, 8};  // 박스 사이즈가 level 0일때 4이하만, level 1일때 6이하만... 
     private float[] truckSize = {1.0f, 1.4f, 2.0f}; // 트럭 사이즈 증가. 수치 조정 need
     private float[] scoreSize = {1.0f, 1.4f, 2.0f}; // 점수환산표 default 규모 증가. 수치 조정 need
-    private float[] boxToScore = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%
-    private UserStatus character;
-    public static int[] levelExp = {100, 300, 1000, 2000, 5000};
+    private float[] boxToScore = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%*/
+    //public static int[] levelExp = {100, 300, 1000, 2000, 5000};
     public static int gridWidth = 16;
     public static int gridHeight = 14;
     public static int gridDepth = 32;
-    public static int score;
+    
     public static Transform[,,] grid = new Transform[gridWidth,gridHeight, gridDepth];
+    public static List<BoxControl> boxList = new List<BoxControl>();
 
     void Start(){
-        character = FindObjectOfType<UserStatus>();
-        int level = character.GetLevel();
-        score = 0;
+    
     }
 
     // Update is called once per frame
@@ -31,15 +30,7 @@ public class GameControl : MonoBehaviour{
         }
         */
     }
-    public float GetTruckSize(int level) {
-        return truckSize[level];
-    }
-    public float GetScoreSize(int level) {
-        return scoreSize[level];
-    }
-    public float GetBoxToScore(int idx) {
-        return boxToScore[idx];
-    }
+    
     // update grid state
     public void UpdateGrid(BoxControl boxes){
         

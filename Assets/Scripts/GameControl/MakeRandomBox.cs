@@ -14,7 +14,7 @@ public class MakeRandomBox : MonoBehaviour
     }
 
     public void makeRandomBox(){
-        int i = Random.Range(0, boxes.Length);
+        int i = Random.Range(0, BoxRange[FindObjectOfType<UserStatus>().GetBoxSizeLevel()]);
         instance = Instantiate(boxes[i], transform.position, Quaternion.identity) as GameObject;
     }
 }

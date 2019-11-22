@@ -26,9 +26,13 @@ public class BoxControl : MonoBehaviour{
     float fall = 0;
     public float fallSpeed = 1f;
     public int size;
+    public static int boxNum;
 
     void Start(){
        //StartCoroutine("RunFadeOut");
+       //stack BoxNum 
+               
+                //boxNum += size;
     }
 
     // Update is called once per frame
@@ -170,8 +174,8 @@ public class BoxControl : MonoBehaviour{
                 if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
                     FindObjectOfType<GameControl>().GameOver();
                 }
-                GameControl.score += size;
-                Debug.Log(GameControl.score + '\n');
+                boxNum +=size;
+                GameControl.boxList.Add(this);
                 FindObjectOfType<MakeRandomBox>().makeRandomBox();
             }
             else{
@@ -188,38 +192,25 @@ public class BoxControl : MonoBehaviour{
 
     private void SendTruck() {
         UserStatus user = FindObjectOfType<UserStatus>();
-        UpdateExp(user);
-        UpdateCharge(user);
-    }
-    private void UpdateExp(UserStatus user) {
-        user.SetExp(TransformRatioToScore(user));
-    }
-    private void UpdateCharge(UserStatus user) {
-        user.SetCharge(TransformRatioToScore(user));
-    }
-    private int TransformRatioToScore(UserStatus user) {
-        int truckVolume = GameControl.gridWidth * GameControl.gridHeight * GameControl.gridDepth;
-        int boxVolume = GameControl.score;
-        int ratio = boxVolume / truckVolume * 100;
-        GameControl gameControl = FindObjectOfType<GameControl>();
-
-        if (ratio >= 0 && ratio < 30) {
-            return (int)(boxVolume * gameControl.GetBoxToScore(0) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
-        } else if (ratio < 50) {
-            return (int)(boxVolume * gameControl.GetBoxToScore(1) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
-        } else if (ratio < 70) {
-            return (int)(boxVolume * gameControl.GetBoxToScore(2) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
-        } else if (ratio < 90) {
-            return (int)(boxVolume * gameControl.GetBoxToScore(3) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
-        } else if (ratio <= 99) {
-            return (int)(boxVolume * gameControl.GetBoxToScore(4) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
-        } else {
-            return (int)(boxVolume * gameControl.GetBoxToScore(5) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        if(boxNum >0){
+            user.UpdateExpAndCharge();
+        }else{
+            //팝업으로 보낼수 없다 표시? 
         }
         
     }
-    private void UpdateNewTruck() {
 
+    public void RemoveBoxes() {
+        Debug.Log(GameControl.boxList.Count);
+        for (int i = 0; i < GameControl.boxList.Count; i++) {
+            Destroy(GameControl.boxList[i].gameObject);
+        }
+        GameControl.boxList.Clear();
+    }
+
+    private void UpdateNewTruck() {
+        boxNum = 0;
+        RemoveBoxes();
     }
     IEnumerator RunFadeOut()
     {
@@ -269,6 +260,7 @@ public class BoxControl : MonoBehaviour{
             }
 
             if(GameControl.grid[(int)pos.x, (int)pos.y, (int)pos.z] != null && GameControl.grid[(int)pos.x, (int)pos.y, (int)pos.z].parent != transform){
+                
                 return false;
             }
         }
@@ -283,5 +275,8 @@ public class BoxControl : MonoBehaviour{
     void OnTriggerStay(Collider col)
     {
         stopFlag = false;
+    }
+    public int getBoxNum(){
+        return boxNum;
     }
 }
