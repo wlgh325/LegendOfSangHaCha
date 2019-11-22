@@ -152,6 +152,7 @@ MonoBehaviour:
   xSpeed: 5
   moveTime: 0.05
   fallSpeed: 1
+  size: 6
 --- !u!54 &4552697810057440048
 Rigidbody:
   m_ObjectHideFlags: 0
