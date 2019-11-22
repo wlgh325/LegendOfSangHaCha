@@ -15,6 +15,7 @@ public class BoxControl : MonoBehaviour{
 
     private bool isClickedLeftBtn, isClickedRightBtn, isClickedDownBtn, isClickedUpBtn, isClickedDepthBtn;
     private bool isClickedRotateX, isClickedRotateY;
+    private bool isClickedSendBtn; // 보내기 버튼
     private bool stopFlag = true;
 
     private float angle = 90;
@@ -24,6 +25,7 @@ public class BoxControl : MonoBehaviour{
 
     float fall = 0;
     public float fallSpeed = 1f;
+    public int size;
 
     void Start(){
        //StartCoroutine("RunFadeOut");
@@ -39,6 +41,8 @@ public class BoxControl : MonoBehaviour{
         isClickedDownBtn = CrossPlatformInputManager.GetButtonDown("GoDown");
         isClickedUpBtn = CrossPlatformInputManager.GetButtonDown("GoUp");
         isClickedDepthBtn = CrossPlatformInputManager.GetButtonDown("GoDepth");
+
+        isClickedSendBtn = CrossPlatformInputManager.GetButtonDown("Send");
         
         // check Button clicked
         if (isClickedRotateY){
@@ -151,7 +155,11 @@ public class BoxControl : MonoBehaviour{
                 FindObjectOfType<GameControl>().UpdateGrid(this);
             }
         }
-        
+        else if (isClickedSendBtn){
+            // Name "Send"인 버튼 배치 need
+            SendTruck();
+            UpdateNewTruck(); // 트럭을 새로 갱신하고 모든 변수들 초기화
+        }
         // fall box
         if(Time.time - fall >= fallSpeed){
             transform.position += new Vector3(0, 0, 1);
@@ -162,6 +170,8 @@ public class BoxControl : MonoBehaviour{
                 if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
                     FindObjectOfType<GameControl>().GameOver();
                 }
+                GameControl.score += size;
+                Debug.Log(GameControl.score + '\n');
                 FindObjectOfType<MakeRandomBox>().makeRandomBox();
             }
             else{
@@ -176,6 +186,41 @@ public class BoxControl : MonoBehaviour{
         
     }
 
+    private void SendTruck() {
+        UserStatus user = FindObjectOfType<UserStatus>();
+        UpdateExp(user);
+        UpdateCharge(user);
+    }
+    private void UpdateExp(UserStatus user) {
+        user.SetExp(TransformRatioToScore(user));
+    }
+    private void UpdateCharge(UserStatus user) {
+        user.SetCharge(TransformRatioToScore(user));
+    }
+    private int TransformRatioToScore(UserStatus user) {
+        int truckVolume = GameControl.gridWidth * GameControl.gridHeight * GameControl.gridDepth;
+        int boxVolume = GameControl.score;
+        int ratio = boxVolume / truckVolume * 100;
+        GameControl gameControl = FindObjectOfType<GameControl>();
+
+        if (ratio >= 0 && ratio < 30) {
+            return (int)(boxVolume * gameControl.GetBoxToScore(0) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        } else if (ratio < 50) {
+            return (int)(boxVolume * gameControl.GetBoxToScore(1) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        } else if (ratio < 70) {
+            return (int)(boxVolume * gameControl.GetBoxToScore(2) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        } else if (ratio < 90) {
+            return (int)(boxVolume * gameControl.GetBoxToScore(3) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        } else if (ratio <= 99) {
+            return (int)(boxVolume * gameControl.GetBoxToScore(4) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        } else {
+            return (int)(boxVolume * gameControl.GetBoxToScore(5) * gameControl.GetScoreSize(user.GetScoreSizeLevel()));
+        }
+        
+    }
+    private void UpdateNewTruck() {
+
+    }
     IEnumerator RunFadeOut()
     {
         bool flag = true;

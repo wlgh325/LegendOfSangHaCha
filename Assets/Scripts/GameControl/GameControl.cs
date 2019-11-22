@@ -5,20 +5,22 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour{
     public Slider expBar;
-    private float exp;
-    private float[] level_exp = {0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f};
-    public int level;
-
-    private float box_size = 0.5f;
-
+    private int[] boxSize = {4, 6, 8};  // 박스 사이즈가 level 0일때 4이하만, level 1일때 6이하만... 
+    private float[] truckSize = {1.0f, 1.4f, 2.0f}; // 트럭 사이즈 증가. 수치 조정 need
+    private float[] scoreSize = {1.0f, 1.4f, 2.0f}; // 점수환산표 default 규모 증가. 수치 조정 need
+    private float[] boxToScore = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%
+    private UserStatus character;
+    public static int[] levelExp = {100, 300, 1000, 2000, 5000};
     public static int gridWidth = 16;
     public static int gridHeight = 14;
-    //public static int gridDepth = 32;
     public static int gridDepth = 32;
+    public static int score;
     public static Transform[,,] grid = new Transform[gridWidth,gridHeight, gridDepth];
 
     void Start(){
-        exp = level_exp[level];
+        character = FindObjectOfType<UserStatus>();
+        int level = character.GetLevel();
+        score = 0;
     }
 
     // Update is called once per frame
@@ -29,7 +31,15 @@ public class GameControl : MonoBehaviour{
         }
         */
     }
-
+    public float GetTruckSize(int level) {
+        return truckSize[level];
+    }
+    public float GetScoreSize(int level) {
+        return scoreSize[level];
+    }
+    public float GetBoxToScore(int idx) {
+        return boxToScore[idx];
+    }
     // update grid state
     public void UpdateGrid(BoxControl boxes){
         
@@ -49,7 +59,6 @@ public class GameControl : MonoBehaviour{
         foreach(Transform box in boxes.transform){
             Vector3 pos = Round (box.position);
             grid[(int)pos.x, (int)pos.y, (int)pos.z] = box;
-            Debug.Log(pos);
         }
     }
     
@@ -66,8 +75,6 @@ public class GameControl : MonoBehaviour{
         //return true;
         return ((int)pos.x >= 0 && pos.x < gridWidth && (int)pos.z < gridDepth && pos.z >= 0
         && (int)pos.y >=0 && (int)pos.y < gridHeight);
-        // return ((int)pos.x >= 0 && (int)pos.x <= gridWidth && (int)pos.y >= 0
-        // && (int)pos.y <= gridHeight && (int)pos.z >= 0);
     }
 
     // 반올림 하는 function
