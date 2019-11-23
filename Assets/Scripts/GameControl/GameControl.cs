@@ -5,12 +5,9 @@ using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour{
     public Slider expBar;
-    /*
-    private int[] boxSize = {4, 6, 8};  // 박스 사이즈가 level 0일때 4이하만, level 1일때 6이하만... 
-    private float[] truckSize = {1.0f, 1.4f, 2.0f}; // 트럭 사이즈 증가. 수치 조정 need
-    private float[] scoreSize = {1.0f, 1.4f, 2.0f}; // 점수환산표 default 규모 증가. 수치 조정 need
-    private float[] boxToScore = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%*/
-    //public static int[] levelExp = {100, 300, 1000, 2000, 5000};
+    public float limitTime;
+    private bool isGameover;
+    public Text timeText;
     public static int gridWidth = 16;
     public static int gridHeight = 14;
     public static int gridDepth = 32;
@@ -19,11 +16,57 @@ public class GameControl : MonoBehaviour{
     public static List<BoxControl> boxList = new List<BoxControl>();
 
     void Start(){
-    
+        isGameover = false;
+        limitTime = 20.0f;
     }
 
     // Update is called once per frame
     private void Update(){
+        if (!isGameover)
+        {
+            int minute = (int)limitTime / 60;
+            int second = (int)(limitTime - minute * 60);
+
+            if (second >= 10)
+            {
+                if (limitTime < 11)
+                {
+                    // 버닝
+                    Time.timeScale = 8.0f; // 게임 속도
+                    limitTime -= 0.125f * Time.deltaTime;
+                    timeText.color = Color.red;
+                    timeText.fontSize = 30;
+                }
+                else {
+                    limitTime -= Time.deltaTime;
+                }
+                timeText.text = "0" + minute + ":" + second;
+            }
+            else
+            {
+                 if (limitTime <= 10)
+                {
+                    // 버닝
+                    Time.timeScale = 8.0f;
+                    limitTime -= 0.125f * Time.deltaTime;
+                    timeText.color = Color.red;
+                    timeText.fontSize = 30;
+                }
+                else {
+                    limitTime -= Time.deltaTime;
+                }
+                timeText.text = "0" + minute + ":0" + second;
+            }
+            
+            if (limitTime < 0)
+            {
+                isGameover = true;
+            }
+        }
+        else {  
+            // 게임 종료하고 점수 집계
+            GameOver();
+        }
         /*
         if(Input.GetKey(KeyCode.E)){
             expBar.value += exp;
