@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UserStatus : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class UserStatus : MonoBehaviour
     private int scoreSizeLevel;
     private float[] scoreRatio = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%
     private LevelStatus levelStatus;
+    public ProgressBarCircle expBar;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,7 @@ public class UserStatus : MonoBehaviour
         boxSizeLevel = 0;
         truckSizeLevel = 0;
         scoreSizeLevel  = 0;
+        expBar.BarValue = 0.0f;
     }
 
     // Update is called once per frame
@@ -35,6 +38,10 @@ public class UserStatus : MonoBehaviour
             LevelUp();
             Debug.Log("levelUp");
         }
+        // Debug.Log("BarValue: " + expBar.BarValue);
+        // Debug.Log("Exp: " + exp);
+        // Debug.Log("Total exp: " + totalExp);
+        expBar.BarValue = (float)exp / totalExp * 100;
     }
 
     public int GetLevel()

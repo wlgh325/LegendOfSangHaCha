@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class GameControl : MonoBehaviour{
-    public Slider expBar;
     public float limitTime;
     private bool isGameover;
     public Text timeText;
@@ -17,7 +16,7 @@ public class GameControl : MonoBehaviour{
 
     void Start(){
         isGameover = false;
-        limitTime = 20.0f;
+        limitTime = 180.0f;
     }
 
     // Update is called once per frame
