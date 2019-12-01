@@ -27,7 +27,9 @@ public class TruckSizeStatus : MonoBehaviour
             Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
             truckSizeUp();
             Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
-            flag = false;
+            deleteBtn();
+            FindObjectOfType<scoreSizeStatus>().deleteBtn();
+            FindObjectOfType<BoxSizeStatus>().deleteBtn();
 
         }
         if (isLevelUp())
@@ -54,6 +56,10 @@ public class TruckSizeStatus : MonoBehaviour
     public void triggerLeverUp()
     {
         levelUp = true;
+    }
+    public void deleteBtn()
+    {
+        flag = false;
     }
 
 }
