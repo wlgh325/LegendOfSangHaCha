@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraControl : MonoBehaviour
 {
@@ -10,88 +11,112 @@ public class CameraControl : MonoBehaviour
     public GameObject truckLeft;
     public GameObject truckRight;
 
+    private float doubleTapTouchTime;
+    float touchDuration;
+    Touch touch;
     // cameras[0] : left
     // cameras[1] : center
     // cameras[2] : Right
-    void Start(){
+    void Start()
+    {
         screenWidth = Screen.width;
         cameraIndex = 1;
         cameras[0].gameObject.SetActive(false);
         cameras[2].gameObject.SetActive(false);
     }
 
+    // https://forum.unity.com/threads/single-tap-double-tap-script.83794/
     // Update is called once per frame
-    void Update(){
-        if(Input.touchCount > 0){
-            GameObject tempObj = null;
-            if(Input.GetTouch (0).position.x < screenWidth / 2){
-                // center -> left
-                if(cameraIndex == 1){
-                    cameras[cameraIndex].gameObject.SetActive(false);
-                    cameras[0].gameObject.SetActive(true);
-                    tempObj = GameObject.Find("Cube1");
-                    tempObj.SetActive(false);
-                }
-                // right -> center
-                else if(cameraIndex == 2){
-                    cameras[cameraIndex].gameObject.SetActive(false);
-                    cameras[1].gameObject.SetActive(true);
-                    tempObj = GameObject.Find("Cube3");
-                    tempObj.SetActive(true);
+    void Update()
+    {
+
+        if (Input.touchCount > 0)
+        {
+            touchDuration += Time.deltaTime;
+            touch = Input.GetTouch(0);
+
+            if (touch.position.x < screenWidth / 2)
+            {
+                if (EventSystem.current.currentSelectedGameObject == null)
+                {
+                    if (touch.phase == TouchPhase.Ended && touchDuration < 0.2f)
+                        StartCoroutine("singleOrDoubleLeft");
                 }
             }
+
             // right camera
-            if(Input.GetTouch (0).position.x > screenWidth / 2){
-                // left -> center
-                if(cameraIndex == 0){
-                    cameras[cameraIndex].gameObject.SetActive(false);
-                    cameras[1].gameObject.SetActive(true);
-                    tempObj = GameObject.Find("Cube1");
-                    tempObj.SetActive(true);
+            if (touch.position.x > screenWidth / 2)
+            {
+                if (EventSystem.current.currentSelectedGameObject == null)
+                {
+                    if (touch.phase == TouchPhase.Ended && touchDuration < 0.2f)
+                        StartCoroutine("singleOrDoubleRight");
                 }
-                // center -> right
-                else if(cameraIndex == 1){
-                    cameras[cameraIndex].gameObject.SetActive(false);
-                    cameras[2].gameObject.SetActive(true);
-                    tempObj = GameObject.Find("Cube3");
-                    tempObj.SetActive(false);
-                }
+            }
+        }
+        else
+            touchDuration = 0.0f;
+
+
+    }
+    IEnumerator singleOrDoubleLeft()
+    {
+        yield return new WaitForSeconds(0.4f);
+
+        if (touch.tapCount == 2)
+        {
+            //this coroutine has been called twice. We should stop the next one here otherwise we get two double tap
+            // center -> left
+            if (cameraIndex == 1)
+            {
+                cameras[cameraIndex].gameObject.SetActive(false);
+                cameras[0].gameObject.SetActive(true);
+                truckLeft.SetActive(false);
+                cameraIndex = 0;
+           
+                StopCoroutine("singleOrDoubleLeft");
+            }
+            // right -> center
+            else if (cameraIndex == 2)
+            {
+                cameras[cameraIndex].gameObject.SetActive(false);
+                cameras[1].gameObject.SetActive(true);
+                truckRight.SetActive(true);
+                cameraIndex = 1;
+        
+                StopCoroutine("singleOrDoubleLeft");
             }
         }
     }
 
-    public void leftClicked(){
-        // center -> left
-        if(cameraIndex == 1){
-            cameras[cameraIndex].gameObject.SetActive(false);
-            cameras[0].gameObject.SetActive(true);
-            truckLeft.SetActive(false);
-            cameraIndex = 0;
-        }
-        // right -> center
-        else if(cameraIndex == 2){
-            cameras[cameraIndex].gameObject.SetActive(false);
-            cameras[1].gameObject.SetActive(true);
-            truckRight.SetActive(true);
-            cameraIndex = 1;
+    IEnumerator singleOrDoubleRight()
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        if (touch.tapCount == 2)
+        {
+            //this coroutine has been called twice. We should stop the next one here otherwise we get two double tap
+
+            // left -> center
+            if (cameraIndex == 0)
+            {
+                cameras[cameraIndex].gameObject.SetActive(false);
+                cameras[1].gameObject.SetActive(true);
+                truckLeft.SetActive(true);
+                cameraIndex = 1;
+                StopCoroutine("singleOrDoubleRight");
+            }
+            // center -> right
+            else if (cameraIndex == 1)
+            {
+                cameras[cameraIndex].gameObject.SetActive(false);
+                cameras[2].gameObject.SetActive(true);
+                truckRight.SetActive(false);
+                cameraIndex = 2;
+                StopCoroutine("singleOrDoubleRight");
+            }
         }
     }
 
-    public void rightClicked(){        
-        // left -> center
-        if(cameraIndex == 0){
-            cameras[cameraIndex].gameObject.SetActive(false);
-            cameras[1].gameObject.SetActive(true);
-            truckLeft.SetActive(true);
-            cameraIndex = 1;
-        }
-        // center -> right
-        else if(cameraIndex == 1){
-            cameras[cameraIndex].gameObject.SetActive(false);
-            cameras[2].gameObject.SetActive(true);
-            truckRight.SetActive(false);
-            cameraIndex = 2;
-        }
-    }
-    
+
 }

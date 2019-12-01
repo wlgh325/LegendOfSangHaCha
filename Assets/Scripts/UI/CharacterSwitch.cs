@@ -9,7 +9,7 @@ public class CharacterSwitch : MonoBehaviour{
 
     bool updateUI;
 
-    int currentIndex;
+    int currentIndex = 0;
 
     // Start is called before the first frame update
     void Start(){
