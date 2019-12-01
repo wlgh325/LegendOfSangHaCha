@@ -3595,6 +3595,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: Expbar
       objectReference: {fileID: 0}
+    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
+        type: 3}
+      propertyPath: Title
+      value: EXP
+      objectReference: {fileID: 0}
+    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
+        type: 3}
+      propertyPath: TitleColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
+        type: 3}
+      propertyPath: TitleColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
+        type: 3}
+      propertyPath: TitleColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
+        type: 3}
+      propertyPath: BarColor.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 224923131576229994, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3699,31 +3724,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
-        type: 3}
-      propertyPath: Title
-      value: EXP
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
-        type: 3}
-      propertyPath: TitleColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
-        type: 3}
-      propertyPath: TitleColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
-        type: 3}
-      propertyPath: TitleColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114501253246479570, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
-        type: 3}
-      propertyPath: BarColor.a
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114215078782690374, guid: 24d5ab3d18c91fc41a2213a537e21ee7,
         type: 3}
@@ -4264,7 +4264,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46765996c6511484098b4b9faba7e5f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  expBar: {fileID: 276311325}
+  limitTime: 0
+  timeText: {fileID: 275008358}
 --- !u!114 &1616719374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4283,9 +4284,6 @@ MonoBehaviour:
   - {fileID: 658161366}
   truckLeft: {fileID: 1012954310}
   truckRight: {fileID: 1461228809}
-  expBar: {fileID: 0}
-  limitTime: 0
-  timeText: {fileID: 275008358}
 --- !u!4 &1715397872 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400052, guid: b34f60ff04d05fb47a052460d474f9af,
