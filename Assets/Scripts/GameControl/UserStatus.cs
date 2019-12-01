@@ -62,7 +62,9 @@ public class UserStatus : MonoBehaviour
     public void ChooseAttribute()
     {
         FindObjectOfType<BoxSizeStatus>().triggerLeverUp();
-        
+        FindObjectOfType<scoreSizeStatus>().triggerLeverUp();
+        FindObjectOfType<TruckSizeStatus>().triggerLeverUp();
+
         // 특성 선택
     }
     public void SetExp(int plus)

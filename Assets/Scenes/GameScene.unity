@@ -189,10 +189,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f,
+    m_HighlightedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2d3565fd57f555a4caeebedff491c95e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7c8714abf8b40b84c98f72b1a68f77ad, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8740358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9f75a4a664975945b58e35baa4816a9, type: 3}
+  m_Script: {fileID: 11500000, guid: f6ff759153853514899c5700c760cb48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scoreSizeStatusbtn: {fileID: 8740358}
@@ -2136,8 +2136,8 @@ MonoBehaviour:
   - {fileID: 9219673056513370100, guid: 4dfafe498d9e8b34f878c17aabe8f1e2, type: 3}
   - {fileID: 1765754207014029082, guid: f2a1223c157ff0841ad8db671b8f03d3, type: 3}
   - {fileID: 1024363811203721064, guid: 71652626faeff76419695167d0c94fcd, type: 3}
-  - {fileID: 4768023754134687187, guid: d74e5a6c36c02084daee3cf9c82dc249, type: 3}
   - {fileID: 2361259381330786081, guid: 9d6b9cc0a178a0947bfc4c682e60f240, type: 3}
+  - {fileID: 4768023754134687187, guid: d74e5a6c36c02084daee3cf9c82dc249, type: 3}
   - {fileID: 3164261167787561976, guid: 013849272f1caee4e82949a9a91fdb50, type: 3}
   - {fileID: 5677884672119309982, guid: bdf758e86c75fc34e8faff383f2d63a6, type: 3}
   - {fileID: 1434342755860946634, guid: 23dc9cc199f7e094f81b49d2c6787903, type: 3}
@@ -2668,7 +2668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85bf3be603548374ca46f521a3aa7fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: BoxSizeUp
+  Name: TruckSizeUp
 --- !u!114 &925794111
 MonoBehaviour:
   m_ObjectHideFlags: 0
