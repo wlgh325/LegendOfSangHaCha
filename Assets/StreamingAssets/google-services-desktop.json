@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "775363513389",
+    "firebase_url": "https://unity-los-backend.firebaseio.com",
+    "project_id": "unity-los-backend",
+    "storage_bucket": "unity-los-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:775363513389:android:1d368e2a9a253d02b4bca4",
+        "android_client_info": {
+          "package_name": "com.GameDesign.LegendOfSangHaCha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "775363513389-bdvj019qu8biv0gjnbh7fdscghsi6rga.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.GameDesign.LegendOfSangHaCha",
+            "certificate_hash": "858e455bc7a02b7657398b1cd80593a2ac0bfdfa"
+          }
+        },
+        {
+          "client_id": "775363513389-2irn4oqn6macu2uieku36gpa8i4i3r50.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdt9wkB7PAu87Xcu5mHk8YU1l3Wdt9wpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "775363513389-2irn4oqn6macu2uieku36gpa8i4i3r50.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

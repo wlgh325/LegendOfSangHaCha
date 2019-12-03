@@ -39,6 +39,7 @@ public class FirstSceneMenu : MonoBehaviour
     }
 
     public void ClickCloseBtn(){
+        Debug.Log("quit");
         Application.Quit();
     }
 }
