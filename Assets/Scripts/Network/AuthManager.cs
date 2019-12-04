@@ -100,7 +100,7 @@ public class AuthManager : MonoBehaviour{
     }
 
     private void ClickStartBtn(){
-        SceneManager.LoadScene("LobyScene");
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public void ClickCloseBtn(){
