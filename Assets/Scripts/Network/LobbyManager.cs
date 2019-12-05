@@ -58,16 +58,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
             connectionInfoText.text = "Connecting to Random Room...";
 
             // 빈 방으로 접속
-            //PhotonNetwork.JoinRandomRoom();
-
-            if(photonView.IsMine){
-                PhotonNetwork.JoinOrCreateRoom("room1", null, null, null);
-            }
-            else{
-                PhotonNetwork.JoinRoom("room1");
-            }
-
-
+            PhotonNetwork.JoinRandomRoom();
         }
         else{
             // 접속 버튼 눌렀는데 갑자기 끊긴 경우

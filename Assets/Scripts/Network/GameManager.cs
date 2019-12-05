@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class GameManager : MonoBehaviourPunCallbacks{
+public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     public Image loadingPanel_main;
     public Image[] loadingPanel_number;
@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviourPunCallbacks{
 
     public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
+
+
     private int[] playerScores;
 
     private void Start() {
@@ -37,7 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks{
     }
 
     private void Update(){
-        if (PhotonNetwork.PlayerList.Length < 2) return;
+        //if (PhotonNetwork.PlayerList.Length < 2) return;
 
         loadingPanel_main.gameObject.SetActive(false);
         BoxControl.start = true;
@@ -56,12 +58,15 @@ public class GameManager : MonoBehaviourPunCallbacks{
 
     private void SpawnPlayer(){
         // Truck, boxSpawn, player character 생성
-        PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
-        PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
+        Instantiate(playerTruckPrefab, spawnTruckPosition.position, Quaternion.identity);
+        Instantiate(playerPrefab, spawnPlayerPosition.position, Quaternion.identity);
+        //PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
+        //PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
     }
-
+    
     private void SpawnBox(){
-        PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
+        Instantiate(makeBoxPrefab, spawnBoxPosition.position, Quaternion.identity);
+        //PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
     }
 
     public override void OnLeftRoom() {
@@ -69,17 +74,35 @@ public class GameManager : MonoBehaviourPunCallbacks{
         SceneManager.UnloadScene("GameScene");
     }
 
-        public void AddScore(int playerNumber, int score)
-        {
-            playerScores[playerNumber - 1] += score;
+    // sync Method
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
+        var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+        // local은 값을 씀
+        if(stream.IsWriting){
+            stream.SendNext(playerScores[localPlayerIndex]);
+        }
+        else{
+            // remote는 값을 읽음
+            if(localPlayerIndex == 1)
+                playerScores[0] = (int) stream.ReceiveNext();
+            else
+                playerScores[1] = (int) stream.ReceiveNext();
 
+            Debug.Log("in");
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
+    }
+
+    public void AddScore(int playerNumber, int score) {
+        playerScores[playerNumber] += score;
+
+        // photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
+    }
 
 
-        [PunRPC]
-        private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
-        {
-            scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
-        }
+    [PunRPC]
+    private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
+    {
+        scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
+    }
 }

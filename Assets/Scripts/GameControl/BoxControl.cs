@@ -211,7 +211,6 @@ public class BoxControl : MonoBehaviour{
     }
 
     public void RemoveBoxes() {
-        Debug.Log(GameControl.boxList.Count);
         for (int i = 0; i < GameControl.boxList.Count; i++) {
             Destroy(GameControl.boxList[i].gameObject);
         }

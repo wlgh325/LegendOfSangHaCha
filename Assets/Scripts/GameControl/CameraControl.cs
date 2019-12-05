@@ -61,7 +61,7 @@ public class CameraControl : MonoBehaviour
     }
     IEnumerator singleOrDoubleLeft()
     {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.3f);
 
         if (touch.tapCount == 2)
         {
