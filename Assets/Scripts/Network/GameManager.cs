@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -19,28 +20,27 @@ public class GameManager : MonoBehaviourPunCallbacks{
     private static GameManager instance;
 
     public Text scoreText;
-    public Transform[] spawnTruckPositions;
+    public Transform spawnTruckPosition;
     public GameObject playerTruckPrefab;
 
-    public Transform[] spawnPlayerPositions;
+    public Transform spawnPlayerPosition;
     public GameObject playerPrefab;
 
-    public Transform[] spawnBoxpositions;
+    public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
     private int[] playerScores;
 
-    private bool updated = false;
-
     private void Start() {
         playerScores = new[] {0, 0};
+        SpawnPlayer();
+        SpawnBox();
     }
 
     private void Update(){
         if (PhotonNetwork.PlayerList.Length < 2) return;
 
-        if(updated){
-            loadingPanel_main.gameObject.SetActive(false);
-
+        loadingPanel_main.gameObject.SetActive(false);
+        BoxControl.start = true;
             /*
             for(int i=0; i<loadingPanel_number.Length; i++){
                 loadingPanel_number[i].gameObject.SetActive(true);
@@ -48,9 +48,6 @@ public class GameManager : MonoBehaviourPunCallbacks{
                 loadingPanel_number[i].gameObject.SetActive(false);
             }
             */
-            SpawnPlayer();
-        }
-        
     }
 
     IEnumerator waitSeconds(){
@@ -58,36 +55,31 @@ public class GameManager : MonoBehaviourPunCallbacks{
     }
 
     private void SpawnPlayer(){
-
-        var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;   //player 번호
-
-        var spawnPosition = spawnTruckPositions[localPlayerIndex % spawnTruckPositions.Length];
-        var spawnPlayerPosition = spawnPlayerPositions[localPlayerIndex % spawnPlayerPositions.Length];
-        var spawnBoxPosition = spawnBoxpositions[localPlayerIndex % spawnBoxpositions.Length];
-
         // Truck, boxSpawn, player character 생성
-        PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnPosition.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
         PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
+    }
+
+    private void SpawnBox(){
         PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
-        updated = false;
     }
-    
-    public override void OnLeftRoom()
-    {
+
+    public override void OnLeftRoom() {
         SceneManager.LoadScene("LobbyScene");
+        SceneManager.UnloadScene("GameScene");
     }
 
-    public void AddScore(int playerNumber, int score)
-    {
-        playerScores[playerNumber - 1] += score;
-        
-        photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
-    }
+        public void AddScore(int playerNumber, int score)
+        {
+            playerScores[playerNumber - 1] += score;
 
-    
-    [PunRPC]
-    private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
-    {
-        scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
-    }    
+            photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
+        }
+
+
+        [PunRPC]
+        private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
+        {
+            scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
+        }
 }

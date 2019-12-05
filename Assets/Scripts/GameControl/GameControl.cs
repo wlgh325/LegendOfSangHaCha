@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour{
-    public float limitTime;
-    private bool isGameover;
+
     public Text timeText;
     public static int gridWidth = 16;
     public static int gridHeight = 14;
@@ -15,62 +15,7 @@ public class GameControl : MonoBehaviour{
     public static List<BoxControl> boxList = new List<BoxControl>();
 
     void Start(){
-        isGameover = false;
-        limitTime = 180.0f;
-    }
 
-    // Update is called once per frame
-    private void Update(){
-        if (!isGameover)
-        {
-            int minute = (int)limitTime / 60;
-            int second = (int)(limitTime - minute * 60);
-
-            if (second >= 10)
-            {
-                if (limitTime < 11)
-                {
-                    // 버닝
-                    Time.timeScale = 8.0f; // 게임 속도
-                    limitTime -= 0.125f * Time.deltaTime;
-                    timeText.color = Color.red;
-                    timeText.fontSize = 30;
-                }
-                else {
-                    limitTime -= Time.deltaTime;
-                }
-                timeText.text = "0" + minute + ":" + second;
-            }
-            else
-            {
-                 if (limitTime <= 10)
-                {
-                    // 버닝
-                    Time.timeScale = 8.0f;
-                    limitTime -= 0.125f * Time.deltaTime;
-                    timeText.color = Color.red;
-                    timeText.fontSize = 30;
-                }
-                else {
-                    limitTime -= Time.deltaTime;
-                }
-                timeText.text = "0" + minute + ":0" + second;
-            }
-            
-            if (limitTime < 0)
-            {
-                isGameover = true;
-            }
-        }
-        else {  
-            // 게임 종료하고 점수 집계
-            GameOver();
-        }
-        /*
-        if(Input.GetKey(KeyCode.E)){
-            expBar.value += exp;
-        }
-        */
     }
     
     // update grid state
@@ -129,6 +74,6 @@ public class GameControl : MonoBehaviour{
     }
 
     public void GameOver(){
-        Application.LoadLevel("GameOver");
+        SceneManager.LoadScene("GameOver");
     }
 }

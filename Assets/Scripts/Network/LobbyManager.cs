@@ -3,6 +3,7 @@ using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviourPunCallbacks{
     
@@ -55,8 +56,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
 
         if(PhotonNetwork.IsConnected){
             connectionInfoText.text = "Connecting to Random Room...";
+
             // 빈 방으로 접속
-            PhotonNetwork.JoinRandomRoom();
+            //PhotonNetwork.JoinRandomRoom();
+
+            if(photonView.IsMine){
+                PhotonNetwork.JoinOrCreateRoom("room1", null, null, null);
+            }
+            else{
+                PhotonNetwork.JoinRoom("room1");
+            }
+
+
         }
         else{
             // 접속 버튼 눌렀는데 갑자기 끊긴 경우
@@ -78,6 +89,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     // 방 접속에 성공할때 실행
     public override void OnJoinedRoom(){
         connectionInfoText.text = "Connected with Room";
+        SceneManager.UnloadScene("LobbyScene");
         PhotonNetwork.LoadLevel("GameScene");
     }
 }
