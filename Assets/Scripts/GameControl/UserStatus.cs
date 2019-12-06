@@ -112,7 +112,7 @@ public class UserStatus : MonoBehaviourPunCallbacks {
     }
     public void UpdateExpAndCharge() {
         int score = CalculateScore();
-        Debug.Log(score);
+        
         var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
         GameManager.Instance.AddScore(localPlayerIndex % 2, score);
 

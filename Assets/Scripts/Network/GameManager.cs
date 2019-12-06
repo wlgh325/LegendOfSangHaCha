@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     }
 
     private void Update(){
-        //if (PhotonNetwork.PlayerList.Length < 2) return;
+        if (PhotonNetwork.PlayerList.Length < 2) return;
 
         loadingPanel_main.gameObject.SetActive(false);
         BoxControl.start = true;
@@ -77,17 +77,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     // sync Method
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
-        // local은 값을 씀
+        // master이 보냄
         if(stream.IsWriting){
             stream.SendNext(playerScores[localPlayerIndex]);
         }
         else{
-            // remote는 값을 읽음
-            if(localPlayerIndex == 1)
-                playerScores[0] = (int) stream.ReceiveNext();
-            else
+            // local에서 씀
+            if(localPlayerIndex == 0)
                 playerScores[1] = (int) stream.ReceiveNext();
-
+            else
+                playerScores[0] = (int) stream.ReceiveNext();
+            
             Debug.Log("in");
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
@@ -96,7 +96,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     public void AddScore(int playerNumber, int score) {
         playerScores[playerNumber] += score;
 
-        // photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
+        if(!PhotonNetwork.IsMasterClient){
+            photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
+            Debug.Log("score update");
+        }
     }
 
 
