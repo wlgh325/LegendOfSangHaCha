@@ -40,7 +40,7 @@ public class TruckSizeStatus : MonoBehaviour{
         }
     }
     public void truckSizeUp() {
-        if (UserStatus.boxSizeLevel < 2) {
+        if (UserStatus.Instance.GetTruckSizeLevel() < 2) {
             FindObjectOfType<UserStatus>().TruckSizeLevelUp();
             GetComponent<UIUpdate>().unshowLevelUpStatus();
         }

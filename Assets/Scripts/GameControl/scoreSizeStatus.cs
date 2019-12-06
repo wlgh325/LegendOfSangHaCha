@@ -36,13 +36,12 @@ public class scoreSizeStatus : MonoBehaviour {
         }
         if (isLevelUp()){
             levelUp = false;
-            GetComponent<UIUpdate>().showLevelUpStatus();
         }
         
     }
     public void scoreSizeUp(){
 
-        if (UserStatus.boxSizeLevel < 2){
+        if (UserStatus.Instance.GetScoreSizeLevel() < 2){
             FindObjectOfType<UserStatus>().ScoreSizeLevelUp();
             GetComponent<UIUpdate>().unshowLevelUpStatus();
         }

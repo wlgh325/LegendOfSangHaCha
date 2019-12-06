@@ -28,15 +28,12 @@ public class BoxControl : MonoBehaviour{
     public static int boxNum;
     public static bool start = false;
 
-    private int[] BoxRange;
-
-
     void Start(){
        //StartCoroutine("RunFadeOut");
        //stack BoxNum 
                
                 //boxNum += size;
-        BoxRange = new int[] { 9, 12, 14};
+        
     }
 
     // Update is called once per frame
@@ -197,8 +194,7 @@ public class BoxControl : MonoBehaviour{
                     GameControl.boxList.Add(this);
 
                     // instantiate new Box
-                    int i = Random.Range(0, BoxRange[UserStatus.boxSizeLevel]);
-                    FindObjectOfType<MakeRandomBox>().makeRandomBox(i);
+                    FindObjectOfType<MakeRandomBox>().makeRandomBox();
                 }
                 else{
                     FindObjectOfType<GameControl>().UpdateGrid(this);

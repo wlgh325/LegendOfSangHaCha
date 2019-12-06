@@ -37,7 +37,7 @@ public class BoxSizeStatus : MonoBehaviour{
 	public void BoxSizeUp()
     {
         //UserStatus user = FindObjectOfType<UserStatus>();
-		if(UserStatus.boxSizeLevel < 2){
+		if(UserStatus.Instance.GetBoxSizeLevel() < 2){
 			FindObjectOfType<UserStatus>().BoxSizeLevelUP();
             GetComponent<UIUpdate>().unshowLevelUpStatus();
         }

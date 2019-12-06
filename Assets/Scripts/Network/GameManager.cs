@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private int[] playerScores;
 
     private void Start() {
+        Debug.Log(UserStatus.Instance.level);
         playerScores = new[] {0, 0};
         SpawnPlayer();
         SpawnBox();

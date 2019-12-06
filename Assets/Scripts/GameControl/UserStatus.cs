@@ -6,18 +6,35 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class UserStatus : MonoBehaviourPunCallbacks {
-    private int level; // 다음 레벨로 가기 위한 경험치 요구치를 위한 레벨 status
+
+    public static UserStatus Instance = null;
+
+    void Awake(){
+        if(Instance == null){
+            Instance = this;
+        }
+        else if(Instance != this){
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
+    public int level; // 다음 레벨로 가기 위한 경험치 요구치를 위한 레벨 status
     private int totalExp;
     private int exp;
     private int charge;
-    public static int boxSizeLevel; // 박스 size는 3,4,6,8이 있는데 레벨 0기준 3,4만
+    private int boxSizeLevel; // 박스 size는 3,4,6,8이 있는데 레벨 0기준 3,4만
     private int truckSizeLevel;
     private int scoreSizeLevel;
     private float[] scoreRatio = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%
-    public ProgressBarCircle expBar;
 
-    void Start() {        
+    public ProgressBarCircle expBar;
+    public Text levelText;
+
+    void Start() {
         level = 0;
+        levelText.text = "Level : " + (level + 1).ToString();
         totalExp = LevelStatus.Instance.getTotalLevelExp(level);
         
         exp = 0;
@@ -33,7 +50,8 @@ public class UserStatus : MonoBehaviourPunCallbacks {
         if (exp >= totalExp)
         {
             LevelUp();
-            Debug.Log("levelUp");
+            GetComponent<UIUpdate>().showLevelUpStatus();
+            levelText.text = "Level : " + (level + 1).ToString();            
         }
         // Debug.Log("BarValue: " + expBar.BarValue);
         // Debug.Log("Exp: " + exp);
@@ -72,16 +90,15 @@ public class UserStatus : MonoBehaviourPunCallbacks {
         charge += plus;
     }
 
-    /*
-    public static int GetBoxSizeLevel()
-    {
+    public int GetBoxSizeLevel(){
         return boxSizeLevel;
-    }*/
-    
+    }
+
     public void BoxSizeLevelUP()
     {
         boxSizeLevel += 1;
     }
+
     public int GetTruckSizeLevel()
     {
         return truckSizeLevel;

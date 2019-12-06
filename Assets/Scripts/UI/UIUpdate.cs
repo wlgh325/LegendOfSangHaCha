@@ -7,14 +7,10 @@ public class UIUpdate : MonoBehaviour{
 
     public GameObject levelupStatus;
 
-    // Start is called before the first frame update
-    void Start() {
-        
-    }
-
-    // Update is called once per frame
-    void Update(){
-        
+    void Awake(){
+        if(levelupStatus != null){
+            levelupStatus.SetActive(false);
+        }
     }
 
     public void showLevelUpStatus(){
