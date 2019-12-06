@@ -58,6 +58,7 @@ public class AuthManager : MonoBehaviour{
     }
 
     public void SignIn(){
+        GameObject.Find("Btn_Start").GetComponent<Animation>().Play("btnClickAnimation");
         if(!IsFirebaseReady || IsSignInOnProgress || User != null){
             return;
         }
@@ -99,11 +100,15 @@ public class AuthManager : MonoBehaviour{
         ClickStartBtn();
     }
 
-    private void ClickStartBtn(){
+    private void ClickStartBtn(){        
         SceneManager.LoadScene("LobbyScene");
     }
 
     public void ClickCloseBtn(){
         Application.Quit();
+    }
+
+    public void ClickManualBtn(){
+        GameObject.Find("Btn_Manual").GetComponent<Animation>().Play("btnClickAnimation");
     }
 }

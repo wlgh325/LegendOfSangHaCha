@@ -4,16 +4,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class BoxSizeStatus : MonoBehaviour
-{
-    public GameObject BoxSizeStatusbtn;
+public class BoxSizeStatus : MonoBehaviour{
+
+    public static BoxSizeStatus Instance{
+        get{
+            if(instance == null) instance = FindObjectOfType<BoxSizeStatus>();
+            return instance;
+        }
+    }
+
+    private static BoxSizeStatus instance;
+    
 	private bool isClickedBoxSizeStatus;
-    private bool flag;
     private bool levelUp;
     // Start is called before the first frame update
-    void Start()
-    {
-        flag = false;
+    void Start(){
         levelUp = false;
     }
 
@@ -22,44 +27,27 @@ public class BoxSizeStatus : MonoBehaviour
     {
         isClickedBoxSizeStatus = CrossPlatformInputManager.GetButtonDown("BoxSizeUp");
        
-        if (isClickedBoxSizeStatus)
-        {
-            //Debug.Log(UserStatus.boxSizeLevel);
+        if (isClickedBoxSizeStatus){
             BoxSizeUp();
-            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
-            deleteBtn();
-            FindObjectOfType<scoreSizeStatus>().deleteBtn();
-            FindObjectOfType<TruckSizeStatus>().deleteBtn();
-
         }
-        if (isLevelUp())
-        {
-            flag = true;
+        if (isLevelUp()){
             levelUp = false;
-            Debug.Log("??");
         }
-         BoxSizeStatusbtn.SetActive(flag);
-        
     }
 	public void BoxSizeUp()
     {
         //UserStatus user = FindObjectOfType<UserStatus>();
-		if(UserStatus.boxSizeLevel < 2)
-        {
+		if(UserStatus.boxSizeLevel < 2){
 			FindObjectOfType<UserStatus>().BoxSizeLevelUP();
+            GetComponent<UIUpdate>().unshowLevelUpStatus();
         }
     }
 	public bool isLevelUp()
     {
         return levelUp;
     }
-	public void triggerLeverUp()
+	public void triggerLevelUp()
     {
         levelUp = true;
     }
-    public void deleteBtn()
-    {
-        flag = false;
-    }
-
 }

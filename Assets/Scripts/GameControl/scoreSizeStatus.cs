@@ -4,16 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class scoreSizeStatus : MonoBehaviour
-{
-    public GameObject scoreSizeStatusbtn;
+public class scoreSizeStatus : MonoBehaviour {
+    public static scoreSizeStatus Instance = null;
+
+    void Awake(){
+        if(Instance == null){
+            Instance = this;
+        }
+        else if(Instance != this){
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+
     private bool isClickedScoreSizeStatus;
-    private bool flag;
     private bool levelUp;
     // Start is called before the first frame update
     void Start()
     {
-        flag = false;
         levelUp = false;
     }
 
@@ -22,40 +31,28 @@ public class scoreSizeStatus : MonoBehaviour
     {
         isClickedScoreSizeStatus = CrossPlatformInputManager.GetButtonDown("ScoreSizeUp");
 
-        if (isClickedScoreSizeStatus)
-        {
-            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+        if (isClickedScoreSizeStatus){
             scoreSizeUp();
-            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
-            deleteBtn();
-            FindObjectOfType<TruckSizeStatus>().deleteBtn();
-            FindObjectOfType<BoxSizeStatus>().deleteBtn();
-
         }
-        if (isLevelUp())
-        {
-            flag = true;
+        if (isLevelUp()){
             levelUp = false;
-            Debug.Log("??");
+            GetComponent<UIUpdate>().showLevelUpStatus();
         }
-        scoreSizeStatusbtn.SetActive(flag);
+        
     }
     public void scoreSizeUp(){
 
         if (UserStatus.boxSizeLevel < 2){
             FindObjectOfType<UserStatus>().ScoreSizeLevelUp();
+            GetComponent<UIUpdate>().unshowLevelUpStatus();
         }
     }
     public bool isLevelUp()
     {
         return levelUp;
     }
-    public void triggerLeverUp()
+    public void triggerLevelUp()
     {
         levelUp = true;
-    }
-    public void deleteBtn()
-    {
-        flag= false;
     }
 }

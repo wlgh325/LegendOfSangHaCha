@@ -61,10 +61,12 @@ public class BoxControl : MonoBehaviour{
                         transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
                     }
                     else{
+                        GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                         transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                     }
                 }
                 else{
+                    GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                     transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                 }
 
@@ -74,6 +76,7 @@ public class BoxControl : MonoBehaviour{
                             transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
                         }
                         else{
+                            GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                             transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                         }
                     }
@@ -91,10 +94,12 @@ public class BoxControl : MonoBehaviour{
                         transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                     }
                     else{
+                        GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                         transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                     }
                 }
                 else{
+                    GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                     transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                 }
 
@@ -104,10 +109,11 @@ public class BoxControl : MonoBehaviour{
                             transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                         }
                         else{
+                            GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                             transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                         }
                     }
-                    else{    
+                    else{
                         transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                     }
                     
@@ -115,6 +121,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedLeftBtn){
+            GameObject.Find("Btn_left").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(-1, 0, 0);
             
             if(!CheckIsValidPosition()){
@@ -125,6 +132,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedRightBtn){
+            GameObject.Find("Btn_right").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(1, 0, 0);
             
             if(!CheckIsValidPosition()){
@@ -135,6 +143,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedDownBtn){
+            GameObject.Find("Btn_down").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, -1, 0);
             
             if(!CheckIsValidPosition()){
@@ -145,6 +154,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedUpBtn){
+            GameObject.Find("Btn_up").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, 1, 0);
             
             if(!CheckIsValidPosition()){
@@ -155,6 +165,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedDepthBtn){
+            GameObject.Find("Btn_depth").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, 0, 1);
             
             if(!CheckIsValidPosition()){
@@ -165,6 +176,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedSendBtn){
+            GameObject.Find("Btn_send").GetComponent<Animation>().Play("btnMoveAnimation");
             // Name "Send"인 버튼 배치 need
             SendTruck();
             UpdateNewTruck(); // 트럭을 새로 갱신하고 모든 변수들 초기화

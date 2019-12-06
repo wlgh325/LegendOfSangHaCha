@@ -6,9 +6,6 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
-
-    public Image loadingPanel_main;
-    public Image[] loadingPanel_number;
     // singleton
     public static GameManager Instance{
         get{
@@ -16,7 +13,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             return instance;
         }
     }
-
+    public Image loadingPanel_main;
+    public Image[] loadingPanel_number;
     private static GameManager instance;
 
     public Text scoreText;
@@ -39,7 +37,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     }
 
     private void Update(){
-        if (PhotonNetwork.PlayerList.Length < 2) return;
+        //if (PhotonNetwork.PlayerList.Length < 2) return;
 
         loadingPanel_main.gameObject.SetActive(false);
         BoxControl.start = true;
@@ -88,7 +86,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             else
                 playerScores[0] = (int) stream.ReceiveNext();
             
-            Debug.Log("in");
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
     }
@@ -98,7 +95,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
         if(!PhotonNetwork.IsMasterClient){
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
-            Debug.Log("score update");
         }
     }
 
