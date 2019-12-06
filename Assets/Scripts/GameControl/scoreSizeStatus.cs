@@ -24,9 +24,9 @@ public class scoreSizeStatus : MonoBehaviour
 
         if (isClickedScoreSizeStatus)
         {
-            Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
             scoreSizeUp();
-            Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
             deleteBtn();
             FindObjectOfType<TruckSizeStatus>().deleteBtn();
             FindObjectOfType<BoxSizeStatus>().deleteBtn();
@@ -40,12 +40,10 @@ public class scoreSizeStatus : MonoBehaviour
         }
         scoreSizeStatusbtn.SetActive(flag);
     }
-    public void scoreSizeUp()
-    {
-        UserStatus user = FindObjectOfType<UserStatus>();
-        if (user.GetScoreSizeLevel() < 2)
-        {
-            user.ScoreSizeLevelUp();
+    public void scoreSizeUp(){
+
+        if (UserStatus.boxSizeLevel < 2){
+            FindObjectOfType<UserStatus>().ScoreSizeLevelUp();
         }
     }
     public bool isLevelUp()

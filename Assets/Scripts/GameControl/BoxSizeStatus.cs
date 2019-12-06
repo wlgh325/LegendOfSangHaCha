@@ -24,9 +24,9 @@ public class BoxSizeStatus : MonoBehaviour
        
         if (isClickedBoxSizeStatus)
         {
-            Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+            //Debug.Log(UserStatus.boxSizeLevel);
             BoxSizeUp();
-            Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
             deleteBtn();
             FindObjectOfType<scoreSizeStatus>().deleteBtn();
             FindObjectOfType<TruckSizeStatus>().deleteBtn();
@@ -43,10 +43,10 @@ public class BoxSizeStatus : MonoBehaviour
     }
 	public void BoxSizeUp()
     {
-        UserStatus user = FindObjectOfType<UserStatus>();
-		if(user.GetBoxSizeLevel() < 2)
+        //UserStatus user = FindObjectOfType<UserStatus>();
+		if(UserStatus.boxSizeLevel < 2)
         {
-			user.BoxSizeLevelUP();
+			FindObjectOfType<UserStatus>().BoxSizeLevelUP();
         }
     }
 	public bool isLevelUp()

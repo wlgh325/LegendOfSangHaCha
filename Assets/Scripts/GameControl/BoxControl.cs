@@ -9,7 +9,6 @@ public class BoxControl : MonoBehaviour{
     public bool allowXRotation = true, limitXRotation = false;
 
     public bool allowYRotation = true, limitYRotation = false;
-    private float speed = 1;
 
     private float directionX, directionY;
 
@@ -27,16 +26,22 @@ public class BoxControl : MonoBehaviour{
     public float fallSpeed = 1f;
     public int size;
     public static int boxNum;
+    public static bool start = false;
+
+    private int[] BoxRange;
+
 
     void Start(){
        //StartCoroutine("RunFadeOut");
        //stack BoxNum 
                
                 //boxNum += size;
+        BoxRange = new int[] { 9, 12, 14};
     }
 
     // Update is called once per frame
     void Update(){
+
         isClickedRotateX = CrossPlatformInputManager.GetButtonDown("rotateX");
         isClickedRotateY = CrossPlatformInputManager.GetButtonDown("rotateY");
 
@@ -164,26 +169,31 @@ public class BoxControl : MonoBehaviour{
             SendTruck();
             UpdateNewTruck(); // 트럭을 새로 갱신하고 모든 변수들 초기화
         }
-        // fall box
-        if(Time.time - fall >= fallSpeed){
-            transform.position += new Vector3(0, 0, 1);
 
-            if(!CheckIsValidPosition()){
-                transform.position += new Vector3(0, 0, -1);
-                enabled = false;
-                if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
-                    FindObjectOfType<GameControl>().GameOver();
+        // fall box
+        if(start){
+            if(Time.time - fall >= fallSpeed){
+                transform.position += new Vector3(0, 0, 1);
+
+                if(!CheckIsValidPosition()){
+                    transform.position += new Vector3(0, 0, -1);
+                    enabled = false;
+                    if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
+                        FindObjectOfType<GameControl>().GameOver();
+                    }
+                    boxNum +=size;
+                    GameControl.boxList.Add(this);
+
+                    // instantiate new Box
+                    int i = Random.Range(0, BoxRange[UserStatus.boxSizeLevel]);
+                    FindObjectOfType<MakeRandomBox>().makeRandomBox(i);
                 }
-                boxNum +=size;
-                GameControl.boxList.Add(this);
-                FindObjectOfType<MakeRandomBox>().makeRandomBox();
+                else{
+                    FindObjectOfType<GameControl>().UpdateGrid(this);
+                }
+                fall = Time.time;
             }
-            else{
-                FindObjectOfType<GameControl>().UpdateGrid(this);
-            }
-            fall = Time.time;
         }
-        
     }
 
     private void FixedUpdate(){
@@ -201,7 +211,6 @@ public class BoxControl : MonoBehaviour{
     }
 
     public void RemoveBoxes() {
-        Debug.Log(GameControl.boxList.Count);
         for (int i = 0; i < GameControl.boxList.Count; i++) {
             Destroy(GameControl.boxList[i].gameObject);
         }

@@ -14,6 +14,7 @@ public class LobySceneManage : MonoBehaviour
     public AudioSource effect_sound;
 
     public void ClickBackBtn(){
+        SceneManager.UnloadScene("LobbyScene");
         SceneManager.LoadScene("FirstScene");
     }
 

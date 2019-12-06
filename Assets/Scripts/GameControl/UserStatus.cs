@@ -1,38 +1,37 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UserStatus : MonoBehaviour
-{
+public class UserStatus : MonoBehaviourPunCallbacks {
     private int level; // 다음 레벨로 가기 위한 경험치 요구치를 위한 레벨 status
     private int totalExp;
     private int exp;
     private int charge;
-    private int boxSizeLevel; // 박스 size는 3,4,6,8이 있는데 레벨 0기준 3,4만
+    public static int boxSizeLevel; // 박스 size는 3,4,6,8이 있는데 레벨 0기준 3,4만
     private int truckSizeLevel;
     private int scoreSizeLevel;
     private float[] scoreRatio = {1.0f, 1.1f, 1.2f, 1.3f, 1.5f, 2.0f}; // 0~30%, 30~50%, 50~70%, 70~90%, 90~99%, 100%
     private LevelStatus levelStatus;
     public ProgressBarCircle expBar;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         levelStatus = new LevelStatus();
         level = 0;
         totalExp = levelStatus.totalLevelExp[level];
+        
         exp = 0;
         charge = 0;
         boxSizeLevel = 0;
         truckSizeLevel = 0;
         scoreSizeLevel  = 0;
-        expBar.BarValue = 0.0f;
+        //expBar.BarValue = 0.0f;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+
         if (exp >= totalExp)
         {
             LevelUp();
@@ -41,7 +40,7 @@ public class UserStatus : MonoBehaviour
         // Debug.Log("BarValue: " + expBar.BarValue);
         // Debug.Log("Exp: " + exp);
         // Debug.Log("Total exp: " + totalExp);
-        expBar.BarValue = (float)exp / totalExp * 100;
+        //expBar.BarValue = (float)exp / totalExp * 100;
     }
 
     public int GetLevel()
@@ -75,10 +74,12 @@ public class UserStatus : MonoBehaviour
     {
         charge += plus;
     }
-    public int GetBoxSizeLevel()
+
+    /*
+    public static int GetBoxSizeLevel()
     {
         return boxSizeLevel;
-    }
+    }*/
     
     public void BoxSizeLevelUP()
     {
@@ -111,10 +112,15 @@ public class UserStatus : MonoBehaviour
     }
     public void UpdateExpAndCharge() {
         int score = CalculateScore();
+        
+        var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
+        GameManager.Instance.AddScore(localPlayerIndex % 2, score);
+
         SetExp(score);
         SetCharge(score);
-        Debug.Log(score);
+        //Debug.Log(score);
     }
+
     private int CalculateScore() {
         int truckVolume = GameControl.gridWidth * GameControl.gridHeight * GameControl.gridDepth;
         int boxVolume = FindObjectOfType<BoxControl>().getBoxNum();
