@@ -8,17 +8,16 @@ public class CameraControl : MonoBehaviour
     private float screenWidth;
     private int cameraIndex;
     public Camera[] cameras;
-    public GameObject truckLeft;
-    public GameObject truckRight;
-
     private float doubleTapTouchTime;
     float touchDuration;
     Touch touch;
+
+    GameObject leftWall;
+    GameObject rightWall;
     // cameras[0] : left
     // cameras[1] : center
     // cameras[2] : Right
-    void Start()
-    {
+    void Start(){
         screenWidth = Screen.width;
         cameraIndex = 1;
         cameras[0].gameObject.SetActive(false);
@@ -71,9 +70,15 @@ public class CameraControl : MonoBehaviour
             {
                 cameras[cameraIndex].gameObject.SetActive(false);
                 cameras[0].gameObject.SetActive(true);
-                truckLeft.SetActive(false);
+
+                // UnShow leftWall
+                if(leftWall == null)
+                
+                    leftWall = GameObject.FindWithTag("LeftWall");
+
+                leftWall.SetActive(false);
+                
                 cameraIndex = 0;
-           
                 StopCoroutine("singleOrDoubleLeft");
             }
             // right -> center
@@ -81,9 +86,13 @@ public class CameraControl : MonoBehaviour
             {
                 cameras[cameraIndex].gameObject.SetActive(false);
                 cameras[1].gameObject.SetActive(true);
-                truckRight.SetActive(true);
+                
+                // Show rightWall
+                if(rightWall == null)
+                    rightWall = GameObject.FindWithTag("Rightall");
+                rightWall.SetActive(true);
+                
                 cameraIndex = 1;
-        
                 StopCoroutine("singleOrDoubleLeft");
             }
         }
@@ -102,7 +111,12 @@ public class CameraControl : MonoBehaviour
             {
                 cameras[cameraIndex].gameObject.SetActive(false);
                 cameras[1].gameObject.SetActive(true);
-                truckLeft.SetActive(true);
+                
+                // Show leftWall
+                if(leftWall == null)
+                    leftWall = GameObject.FindWithTag("LeftWall");
+                leftWall.SetActive(true);
+
                 cameraIndex = 1;
                 StopCoroutine("singleOrDoubleRight");
             }
@@ -111,12 +125,15 @@ public class CameraControl : MonoBehaviour
             {
                 cameras[cameraIndex].gameObject.SetActive(false);
                 cameras[2].gameObject.SetActive(true);
-                truckRight.SetActive(false);
+                
+                // UnShow rightWall
+                if(rightWall == null)
+                    rightWall = GameObject.FindWithTag("RightWall");
+                rightWall.SetActive(false);
+
                 cameraIndex = 2;
                 StopCoroutine("singleOrDoubleRight");
             }
         }
     }
-
-
 }

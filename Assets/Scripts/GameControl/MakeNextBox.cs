@@ -13,7 +13,7 @@ public class MakeNextBox : MonoBehaviour {
 
     public void showNextBox(){
         int i = 0;
-        Debug.Log("next in");
+
         Destroy(instance);
         if(GameManager.Instance.randomQueue.Count != 0){
             i = GameManager.Instance.randomQueue.Peek();

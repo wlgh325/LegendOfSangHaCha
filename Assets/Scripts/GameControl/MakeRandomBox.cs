@@ -23,7 +23,6 @@ public class MakeRandomBox : MonoBehaviour
     public void makeRandomBox(){
         int i = 0;
         
-        Debug.Log("in make");
         if(GameManager.Instance.randomQueue.Count != 0){
             i = GameManager.Instance.randomQueue.Dequeue();
                     
