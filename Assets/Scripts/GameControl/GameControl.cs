@@ -5,17 +5,33 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameControl : MonoBehaviour{
+    public static GameControl
+    Instance{
+        get{
+            if(instance == null) instance = FindObjectOfType<GameControl>();
+            return instance;
+        }
+    }
+    private static GameControl instance;
 
     public Text timeText;
-    public static int gridWidth = 16;
-    public static int gridHeight = 14;
-    public static int gridDepth = 32;
-    
-    public static Transform[,,] grid = new Transform[gridWidth,gridHeight, gridDepth];
-    public static List<BoxControl> boxList = new List<BoxControl>();
+    public static int gridWidth;
+    public static int gridHeight;
+    public static int gridDepth;
+    public int[,] gridSizes;
+    public static Transform[,,] grid;
+    public static List<BoxControl> boxList;
+    private int gridLevel;
 
     void Start(){
-
+        gridLevel = 0;
+        gridSizes = new int[3,3]{{5,5,7},{7,7,9},{9,9,11}};
+        gridWidth = gridSizes[gridLevel,0];
+        gridHeight = gridSizes[gridLevel,1];
+        gridDepth = gridSizes[gridLevel,2];
+        grid = new Transform[gridWidth,gridHeight, gridDepth];
+        boxList = new List<BoxControl>();
+       
     }
     
     // update grid state
@@ -75,5 +91,12 @@ public class GameControl : MonoBehaviour{
 
     public void GameOver(){
         SceneManager.LoadScene("GameOver");
+    }
+    public void updateGridLevel(){
+        this.gridLevel += 1;
+        gridWidth = gridSizes[gridLevel, 0];
+        gridHeight = gridSizes[gridLevel, 1];
+        gridDepth = gridSizes[gridLevel, 2];
+        grid = new Transform[gridWidth,gridHeight, gridDepth];
     }
 }

@@ -7,11 +7,11 @@ public class Player : MonoBehaviourPun{
 
         if (photonView.IsMine)
         {
-            Debug.Log("isMine");    
+            //Debug.Log("isMine");
         }
         else
         {
-            Debug.Log("!!!isMine");
+            //Debug.Log("!!!isMine");
         }
     }
 

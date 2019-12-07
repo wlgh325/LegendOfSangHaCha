@@ -27,21 +27,13 @@ public class BoxControl : MonoBehaviour{
     public int size;
     public static int boxNum;
     public static bool start = false;
-
-    private int[] BoxRange;
-
-
+    
     void Start(){
-       //StartCoroutine("RunFadeOut");
-       //stack BoxNum 
-               
-                //boxNum += size;
-        BoxRange = new int[] { 9, 12, 14};
+       
     }
 
     // Update is called once per frame
     void Update(){
-
         isClickedRotateX = CrossPlatformInputManager.GetButtonDown("rotateX");
         isClickedRotateY = CrossPlatformInputManager.GetButtonDown("rotateY");
 
@@ -61,10 +53,12 @@ public class BoxControl : MonoBehaviour{
                         transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
                     }
                     else{
+                        GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                         transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                     }
                 }
                 else{
+                    GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                     transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                 }
 
@@ -74,6 +68,7 @@ public class BoxControl : MonoBehaviour{
                             transform.Rotate(new Vector3(0, -angle, 0), Space.Self);
                         }
                         else{
+                            GameObject.Find("rotateY").GetComponent<Animation>().Play("btnMoveAnimation");
                             transform.Rotate(new Vector3(0, angle, 0), Space.Self);
                         }
                     }
@@ -91,10 +86,12 @@ public class BoxControl : MonoBehaviour{
                         transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                     }
                     else{
+                        GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                         transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                     }
                 }
                 else{
+                    GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                     transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                 }
 
@@ -104,10 +101,11 @@ public class BoxControl : MonoBehaviour{
                             transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                         }
                         else{
+                            GameObject.Find("rotateX").GetComponent<Animation>().Play("btnMoveAnimation");
                             transform.Rotate(new Vector3(angle, 0, 0), Space.Self);
                         }
                     }
-                    else{    
+                    else{
                         transform.Rotate(new Vector3(-angle, 0, 0), Space.Self);
                     }
                     
@@ -115,6 +113,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedLeftBtn){
+            GameObject.Find("Btn_left").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(-1, 0, 0);
             
             if(!CheckIsValidPosition()){
@@ -125,6 +124,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedRightBtn){
+            GameObject.Find("Btn_right").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(1, 0, 0);
             
             if(!CheckIsValidPosition()){
@@ -135,6 +135,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedDownBtn){
+            GameObject.Find("Btn_down").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, -1, 0);
             
             if(!CheckIsValidPosition()){
@@ -145,6 +146,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedUpBtn){
+            GameObject.Find("Btn_up").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, 1, 0);
             
             if(!CheckIsValidPosition()){
@@ -155,6 +157,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedDepthBtn){
+            GameObject.Find("Btn_depth").GetComponent<Animation>().Play("btnMoveAnimation");
             transform.position += new Vector3(0, 0, 1);
             
             if(!CheckIsValidPosition()){
@@ -165,6 +168,7 @@ public class BoxControl : MonoBehaviour{
             }
         }
         else if (isClickedSendBtn){
+            GameObject.Find("Btn_send").GetComponent<Animation>().Play("btnMoveAnimation");
             // Name "Send"인 버튼 배치 need
             SendTruck();
             UpdateNewTruck(); // 트럭을 새로 갱신하고 모든 변수들 초기화
@@ -176,6 +180,7 @@ public class BoxControl : MonoBehaviour{
                 transform.position += new Vector3(0, 0, 1);
 
                 if(!CheckIsValidPosition()){
+                    
                     transform.position += new Vector3(0, 0, -1);
                     enabled = false;
                     if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
@@ -185,8 +190,8 @@ public class BoxControl : MonoBehaviour{
                     GameControl.boxList.Add(this);
 
                     // instantiate new Box
-                    int i = Random.Range(0, BoxRange[UserStatus.boxSizeLevel]);
-                    FindObjectOfType<MakeRandomBox>().makeRandomBox(i);
+                    FindObjectOfType<MakeRandomBox>().makeRandomBox();
+                    FindObjectOfType<MakeNextBox>().showNextBox();
                 }
                 else{
                     FindObjectOfType<GameControl>().UpdateGrid(this);
@@ -221,45 +226,7 @@ public class BoxControl : MonoBehaviour{
         boxNum = 0;
         RemoveBoxes();
     }
-    IEnumerator RunFadeOut()
-    {
-        bool flag = true;
-        int timeCount = 0;
-        while (true)
-        { 
-            if (flag)
-            {
-                if (stopFlag)
-                {
-                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
-                    transform.position += tmp;
-                    timeCount++;
-                    yield return new WaitForSeconds(0.0f);
-                    if (timeCount * Time.deltaTime > moveTime)
-                    {
-                        flag = false;
-                        timeCount = 0;
-                    }
-                }
-                else
-                {
-                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
-                    transform.position -= tmp;
-                    yield return new WaitForSeconds(0.0f);
-                    break;
-                }
-            
-            }
-            else
-            {
-            
-                yield return new WaitForSeconds(1.5f);
-                flag = true;
-            }
-       
-        }
-    }
-
+   
     bool CheckIsValidPosition (){
         foreach(Transform box in transform){
             Vector3 pos = FindObjectOfType<GameControl>().Round(box.position);

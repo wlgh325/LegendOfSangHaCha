@@ -4,11 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
-
-    public Image loadingPanel_main;
-    public Image[] loadingPanel_number;
     // singleton
     public static GameManager Instance{
         get{
@@ -16,40 +14,52 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             return instance;
         }
     }
-
+    public Image loadingPanel_main;
+    public Image[] loadingPanel_number;
     private static GameManager instance;
 
     public Text scoreText;
-    public Transform spawnTruckPosition;
-    public GameObject playerTruckPrefab;
+    public Transform[] spawnTruckPosition;
+    public GameObject[] playerTruckPrefab;
 
     public Transform spawnPlayerPosition;
     public GameObject playerPrefab;
 
     public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
+    private int truckSizeLevel;
 
+    public Transform spawnNextBoxPosition;
+    public GameObject makeNextBoxPrefab;
+    
 
     private int[] playerScores;
+    
+    
+    private int[] BoxRange;
+    public Queue<int> randomQueue = new Queue<int>();
+    public GameObject truckInstance;
 
     private void Start() {
+        BoxRange = new int[] { 9, 12, 14};
+        fillRandomQueue();
+
+        if(loadingPanel_number != null){
+            for(int i=0; i<loadingPanel_number.Length; i++){
+                loadingPanel_number[i].gameObject.SetActive(false);
+            }
+        }
+        
         playerScores = new[] {0, 0};
+        truckSizeLevel = 0;
         SpawnPlayer();
         SpawnBox();
     }
 
     private void Update(){
-        if (PhotonNetwork.PlayerList.Length < 2) return;
-
+        //if (PhotonNetwork.PlayerList.Length < 2) return;
         loadingPanel_main.gameObject.SetActive(false);
-        BoxControl.start = true;
-            /*
-            for(int i=0; i<loadingPanel_number.Length; i++){
-                loadingPanel_number[i].gameObject.SetActive(true);
-                //StartCoroutine(waitSeconds());
-                loadingPanel_number[i].gameObject.SetActive(false);
-            }
-            */
+        BoxControl.start = true;            
     }
 
     IEnumerator waitSeconds(){
@@ -58,14 +68,20 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     private void SpawnPlayer(){
         // Truck, boxSpawn, player character 생성
-        Instantiate(playerTruckPrefab, spawnTruckPosition.position, Quaternion.identity);
+        truckInstance = Instantiate(playerTruckPrefab[truckSizeLevel], spawnTruckPosition[truckSizeLevel].position, Quaternion.identity);
         Instantiate(playerPrefab, spawnPlayerPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
     }
-    
+    public void SpawnTruck()
+    {
+        truckSizeLevel = UserStatus.Instance.GetTruckSizeLevel();
+        Destroy(truckInstance);
+        truckInstance = Instantiate(playerTruckPrefab[truckSizeLevel], spawnTruckPosition[truckSizeLevel].position, Quaternion.identity);
+    }
     private void SpawnBox(){
         Instantiate(makeBoxPrefab, spawnBoxPosition.position, Quaternion.identity);
+        Instantiate(makeNextBoxPrefab, spawnNextBoxPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
     }
 
@@ -88,7 +104,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             else
                 playerScores[0] = (int) stream.ReceiveNext();
             
-            Debug.Log("in");
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
     }
@@ -98,7 +113,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
         if(!PhotonNetwork.IsMasterClient){
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
-            Debug.Log("score update");
         }
     }
 
@@ -107,5 +121,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
     {
         scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
+    }
+
+    public void fillRandomQueue(){
+        for(int i=0; i<10; i++){
+            int j = Random.Range(0, BoxRange[UserStatus.Instance.GetBoxSizeLevel()]);
+            randomQueue.Enqueue(j);
+        }
     }
 }

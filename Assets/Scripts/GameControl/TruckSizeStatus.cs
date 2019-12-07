@@ -4,16 +4,26 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class TruckSizeStatus : MonoBehaviour
-{
-    public GameObject truckSizeStatusbtn;
+public class TruckSizeStatus : MonoBehaviour{
+
+    public static TruckSizeStatus Instance = null;
+
+    void Awake(){
+        if(Instance == null){
+            Instance = this;
+        }
+        else if(Instance != this){
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    
     private bool isClickedTruckSizeStatus;
-    private bool flag;
     private bool levelUp;
     // Start is called before the first frame update
     void Start()
     {
-        flag = false;
         levelUp = false;
     }
 
@@ -22,41 +32,27 @@ public class TruckSizeStatus : MonoBehaviour
     {
         isClickedTruckSizeStatus = CrossPlatformInputManager.GetButtonDown("TruckSizeUp");
 
-        if (isClickedTruckSizeStatus)
-        {
-            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
+        if (isClickedTruckSizeStatus){
             truckSizeUp();
-            //Debug.Log(FindObjectOfType<UserStatus>().GetBoxSizeLevel());
-            deleteBtn();
-            FindObjectOfType<scoreSizeStatus>().deleteBtn();
-            FindObjectOfType<BoxSizeStatus>().deleteBtn();
-
         }
-        if (isLevelUp())
-        {
-            flag = true;
+        if (isLevelUp()){
             levelUp = false;
-            Debug.Log("??");
         }
-        truckSizeStatusbtn.SetActive(flag);
-
     }
     public void truckSizeUp() {
-        if (UserStatus.boxSizeLevel < 2) {
+        if (UserStatus.Instance.GetTruckSizeLevel() < 2) {
             FindObjectOfType<UserStatus>().TruckSizeLevelUp();
+            GetComponent<UIUpdate>().unshowLevelUpStatus();
+            GameManager.Instance.SpawnTruck();
+            GameControl.Instance.updateGridLevel();
         }
     }
     public bool isLevelUp()
     {
         return levelUp;
     }
-    public void triggerLeverUp()
+    public void triggerLevelUp()
     {
         levelUp = true;
     }
-    public void deleteBtn()
-    {
-        flag = false;
-    }
-
 }

@@ -2,12 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelStatus : MonoBehaviour
-{
+public class LevelStatus : MonoBehaviour {
+
+    public static LevelStatus Instance = null;
+
+    void Awake(){
+        if(Instance == null){
+            Instance = this;
+        }
+        else if(Instance != this){
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
+    }
+    
     private int[] boxSize;  // 박스 사이즈가 level 0일때 4이하만, level 1일때 6이하만... 
     private float[] truckSize; // 트럭 사이즈 증가. 수치 조정 need
     private float[] scoreSize; // 점수환산표 default 규모 증가. 수치 조정 need
-    public int[] totalLevelExp;
+    private int[] totalLevelExp;
     // Start is called before the first frame update
     public LevelStatus()
     {
@@ -21,4 +34,7 @@ public class LevelStatus : MonoBehaviour
         return scoreSize[scoreSizeLevel];
     }
 
+    public int getTotalLevelExp(int level){
+        return totalLevelExp[level];
+    }
 }
