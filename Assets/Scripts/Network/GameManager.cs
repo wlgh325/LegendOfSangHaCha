@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     // singleton
@@ -27,11 +28,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
 
+    public Transform spawnNextBoxPosition;
+    public GameObject makeNextBoxPrefab;
+    
 
     private int[] playerScores;
+    
+    
+    private int[] BoxRange;
+    public Queue<int> randomQueue = new Queue<int>();
 
     private void Start() {
-        Debug.Log(UserStatus.Instance.level);
+        BoxRange = new int[] { 9, 12, 14};
+        fillRandomQueue();
+
+        if(loadingPanel_number != null){
+            for(int i=0; i<loadingPanel_number.Length; i++){
+                loadingPanel_number[i].gameObject.SetActive(false);
+            }
+        }
+        
         playerScores = new[] {0, 0};
         SpawnPlayer();
         SpawnBox();
@@ -41,14 +57,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         //if (PhotonNetwork.PlayerList.Length < 2) return;
 
         loadingPanel_main.gameObject.SetActive(false);
-        BoxControl.start = true;
-            /*
-            for(int i=0; i<loadingPanel_number.Length; i++){
-                loadingPanel_number[i].gameObject.SetActive(true);
-                //StartCoroutine(waitSeconds());
-                loadingPanel_number[i].gameObject.SetActive(false);
-            }
-            */
+        BoxControl.start = true;            
     }
 
     IEnumerator waitSeconds(){
@@ -65,6 +74,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     
     private void SpawnBox(){
         Instantiate(makeBoxPrefab, spawnBoxPosition.position, Quaternion.identity);
+        Instantiate(makeNextBoxPrefab, spawnNextBoxPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
     }
 
@@ -104,5 +114,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
     {
         scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
+    }
+
+    public void fillRandomQueue(){
+        for(int i=0; i<10; i++){
+            int j = Random.Range(0, BoxRange[UserStatus.Instance.GetBoxSizeLevel()]);
+            randomQueue.Enqueue(j);
+        }
     }
 }

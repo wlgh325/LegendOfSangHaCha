@@ -28,17 +28,18 @@ public class BoxControl : MonoBehaviour{
     public static int boxNum;
     public static bool start = false;
 
+    private bool isMove = false;
+
+    BoxControl(){
+        isMove = true;
+    }
+    
     void Start(){
-       //StartCoroutine("RunFadeOut");
-       //stack BoxNum 
-               
-                //boxNum += size;
-        
+       
     }
 
     // Update is called once per frame
     void Update(){
-
         isClickedRotateX = CrossPlatformInputManager.GetButtonDown("rotateX");
         isClickedRotateY = CrossPlatformInputManager.GetButtonDown("rotateY");
 
@@ -185,6 +186,7 @@ public class BoxControl : MonoBehaviour{
                 transform.position += new Vector3(0, 0, 1);
 
                 if(!CheckIsValidPosition()){
+                    
                     transform.position += new Vector3(0, 0, -1);
                     enabled = false;
                     if(FindObjectOfType<GameControl>().CheckIsAboveGrid(this)){
@@ -195,6 +197,7 @@ public class BoxControl : MonoBehaviour{
 
                     // instantiate new Box
                     FindObjectOfType<MakeRandomBox>().makeRandomBox();
+                    FindObjectOfType<MakeNextBox>().showNextBox();
                 }
                 else{
                     FindObjectOfType<GameControl>().UpdateGrid(this);
@@ -229,45 +232,7 @@ public class BoxControl : MonoBehaviour{
         boxNum = 0;
         RemoveBoxes();
     }
-    IEnumerator RunFadeOut()
-    {
-        bool flag = true;
-        int timeCount = 0;
-        while (true)
-        { 
-            if (flag)
-            {
-                if (stopFlag)
-                {
-                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
-                    transform.position += tmp;
-                    timeCount++;
-                    yield return new WaitForSeconds(0.0f);
-                    if (timeCount * Time.deltaTime > moveTime)
-                    {
-                        flag = false;
-                        timeCount = 0;
-                    }
-                }
-                else
-                {
-                    Vector3 tmp = new Vector3(xSpeed * Time.deltaTime, 0.0f, 0.0f);
-                    transform.position -= tmp;
-                    yield return new WaitForSeconds(0.0f);
-                    break;
-                }
-            
-            }
-            else
-            {
-            
-                yield return new WaitForSeconds(1.5f);
-                flag = true;
-            }
-       
-        }
-    }
-
+   
     bool CheckIsValidPosition (){
         foreach(Transform box in transform){
             Vector3 pos = FindObjectOfType<GameControl>().Round(box.position);

@@ -6,32 +6,34 @@ public class MakeRandomBox : MonoBehaviour
 {
     public GameObject[] boxes;
     private GameObject instance;
-    Queue<int> randomQueue = new Queue<int>();
-    private int[] BoxRange;
 
     private void Start(){
-        BoxRange = new int[] { 9, 12, 14};
-        fillRandomQueue();
+        // 빈 gameobject의 transform을 빌림
+        // transform을 따로 new 할 수 없음
+        /*
+        nextBoxPosition = new GameObject().GetComponent<Transform>();
+        nextBoxPosition.position = new Vector3(-1.17f, 11f, 0.0f);
+        nextBoxPosition.rotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+        nextBoxPosition.localScale = new Vector3(0,0,0);
+        */
+
         makeRandomBox();
     }
 
     public void makeRandomBox(){
         int i = 0;
-        if(randomQueue != null){
-            i = randomQueue.Dequeue();
+        
+        Debug.Log("in make");
+        if(GameManager.Instance.randomQueue.Count != 0){
+            i = GameManager.Instance.randomQueue.Dequeue();
+                    
         }
         else{
-            fillRandomQueue();
-            i = randomQueue.Dequeue();
+            GameManager.Instance.fillRandomQueue();
+            i = GameManager.Instance.randomQueue.Dequeue();
         }
-
-        instance = Instantiate(boxes[i], transform.position, Quaternion.identity) as GameObject;
+                
+        instance = Instantiate(boxes[i], transform.position, Quaternion.identity) as GameObject;        
     }
 
-    private void fillRandomQueue(){
-        for(int i=0; i<10; i++){
-            int j = Random.Range(0, BoxRange[UserStatus.Instance.GetBoxSizeLevel()]);
-            randomQueue.Enqueue(j);
-        }
-    }
 }
