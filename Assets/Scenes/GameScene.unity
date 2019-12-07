@@ -1834,7 +1834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 109293116}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: -6.52, z: 12.28}
+  m_LocalPosition: {x: 3, y: -6.52, z: 12.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1182065989}
@@ -1971,6 +1971,66 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1.991701
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1616719374}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: leftCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 5310267580751408704, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1616719374}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: rightCamera
+      objectReference: {fileID: 0}
+    - target: {fileID: 277715332932092834, guid: bb4a832fe52f36d44bf2217779c75717,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bb4a832fe52f36d44bf2217779c75717, type: 3}
@@ -4477,7 +4537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295656355}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: -6.52, z: 16.28}
+  m_LocalPosition: {x: 5, y: -6.52, z: 15.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1182065989}
@@ -7813,7 +7873,6 @@ GameObject:
   m_Component:
   - component: {fileID: 516266912}
   - component: {fileID: 516266911}
-  - component: {fileID: 516266910}
   m_Layer: 0
   m_Name: Left Camera
   m_TagString: Untagged
@@ -7821,14 +7880,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &516266910
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 516266909}
-  m_Enabled: 1
 --- !u!20 &516266911
 Camera:
   m_ObjectHideFlags: 0
@@ -7880,7 +7931,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 516266909}
   m_LocalRotation: {x: 0.04124674, y: 0.5420057, z: -0.028110282, w: 0.8388912}
-  m_LocalPosition: {x: -16.58, y: 8.88, z: 7.38}
+  m_LocalPosition: {x: -16.58, y: 8.88, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10099,7 +10150,6 @@ GameObject:
   m_Component:
   - component: {fileID: 658161367}
   - component: {fileID: 658161366}
-  - component: {fileID: 658161365}
   m_Layer: 0
   m_Name: Right Camera
   m_TagString: Untagged
@@ -10107,14 +10157,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &658161365
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 658161364}
-  m_Enabled: 1
 --- !u!20 &658161366
 Camera:
   m_ObjectHideFlags: 0
@@ -10166,7 +10208,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 658161364}
   m_LocalRotation: {x: 0.08332791, y: -0.49699855, z: 0.03344597, w: 0.86309344}
-  m_LocalPosition: {x: 32, y: 8.88, z: 7.4}
+  m_LocalPosition: {x: 32, y: 8.88, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14563,7 +14605,6 @@ GameObject:
   m_Component:
   - component: {fileID: 963194228}
   - component: {fileID: 963194227}
-  - component: {fileID: 963194226}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -14571,14 +14612,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &963194226
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 963194225}
-  m_Enabled: 1
 --- !u!20 &963194227
 Camera:
   m_ObjectHideFlags: 0
@@ -15904,7 +15937,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1060150492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6, y: 0, z: 0}
+  m_LocalPosition: {x: 3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -19193,28 +19226,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263908067}
   m_Mesh: {fileID: -7870861582546819789, guid: 228847f2a1edbf34c8b0c28273a00c53, type: 3}
---- !u!1 &1276677490 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3017036297297597128, guid: bb4a832fe52f36d44bf2217779c75717,
-    type: 3}
-  m_PrefabInstance: {fileID: 109704218}
-  m_PrefabAsset: {fileID: 0}
---- !u!111 &1276677497
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1276677490}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 1be6f302fa4d0c04bb0f5eb24b2bd6e5, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 1be6f302fa4d0c04bb0f5eb24b2bd6e5, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1001 &1290502480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22668,7 +22679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0.98}
-  m_AnchoredPosition: {x: 0, y: 10.039978}
+  m_AnchoredPosition: {x: 0, y: 10.040039}
   m_SizeDelta: {x: -956, y: -479.35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1561744733
@@ -23237,6 +23248,7 @@ GameObject:
   - component: {fileID: 1616719382}
   - component: {fileID: 1616719380}
   - component: {fileID: 1616719383}
+  - component: {fileID: 1616719384}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -23287,8 +23299,6 @@ MonoBehaviour:
   - {fileID: 516266911}
   - {fileID: 963194227}
   - {fileID: 658161366}
-  truckLeft: {fileID: 1322944424}
-  truckRight: {fileID: 2053099021}
 --- !u!114 &1616719375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23438,6 +23448,14 @@ MonoBehaviour:
   level: 0
   expBar: {fileID: 290900568}
   levelText: {fileID: 842259778}
+--- !u!81 &1616719384
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1616719371}
+  m_Enabled: 1
 --- !u!1 &1618556599
 GameObject:
   m_ObjectHideFlags: 0

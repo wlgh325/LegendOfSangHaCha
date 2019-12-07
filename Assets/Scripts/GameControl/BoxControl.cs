@@ -29,7 +29,7 @@ public class BoxControl : MonoBehaviour{
     public static bool start = false;
     
     void Start(){
-       
+
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class BoxControl : MonoBehaviour{
         isClickedDepthBtn = CrossPlatformInputManager.GetButtonDown("GoDepth");
 
         isClickedSendBtn = CrossPlatformInputManager.GetButtonDown("Send");
-        
+
         // check Button clicked
         if (isClickedRotateY){
             if(allowYRotation){
@@ -114,6 +114,7 @@ public class BoxControl : MonoBehaviour{
         }
         else if (isClickedLeftBtn){
             GameObject.Find("Btn_left").GetComponent<Animation>().Play("btnMoveAnimation");
+
             transform.position += new Vector3(-1, 0, 0);
             
             if(!CheckIsValidPosition()){
