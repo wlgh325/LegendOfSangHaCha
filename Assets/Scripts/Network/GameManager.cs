@@ -19,14 +19,15 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private static GameManager instance;
 
     public Text scoreText;
-    public Transform spawnTruckPosition;
-    public GameObject playerTruckPrefab;
+    public Transform[] spawnTruckPosition;
+    public GameObject[] playerTruckPrefab;
 
     public Transform spawnPlayerPosition;
     public GameObject playerPrefab;
 
     public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
+    private int truckSizeLevel;
 
     public Transform spawnNextBoxPosition;
     public GameObject makeNextBoxPrefab;
@@ -37,6 +38,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     
     private int[] BoxRange;
     public Queue<int> randomQueue = new Queue<int>();
+    public GameObject truckInstance;
 
     private void Start() {
         BoxRange = new int[] { 9, 12, 14};
@@ -49,13 +51,13 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         }
         
         playerScores = new[] {0, 0};
+        truckSizeLevel = 0;
         SpawnPlayer();
         SpawnBox();
     }
 
     private void Update(){
         //if (PhotonNetwork.PlayerList.Length < 2) return;
-
         loadingPanel_main.gameObject.SetActive(false);
         BoxControl.start = true;            
     }
@@ -66,12 +68,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     private void SpawnPlayer(){
         // Truck, boxSpawn, player character 생성
-        Instantiate(playerTruckPrefab, spawnTruckPosition.position, Quaternion.identity);
+        truckInstance = Instantiate(playerTruckPrefab[truckSizeLevel], spawnTruckPosition[truckSizeLevel].position, Quaternion.identity);
         Instantiate(playerPrefab, spawnPlayerPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
     }
-    
+    public void SpawnTruck()
+    {
+        truckSizeLevel = UserStatus.Instance.GetTruckSizeLevel();
+        Destroy(truckInstance);
+        truckInstance = Instantiate(playerTruckPrefab[truckSizeLevel], spawnTruckPosition[truckSizeLevel].position, Quaternion.identity);
+    }
     private void SpawnBox(){
         Instantiate(makeBoxPrefab, spawnBoxPosition.position, Quaternion.identity);
         Instantiate(makeNextBoxPrefab, spawnNextBoxPosition.position, Quaternion.identity);

@@ -586,7 +586,7 @@ MonoBehaviour:
   xSpeed: 5
   moveTime: 0.05
   fallSpeed: 1
-  size: 0
+  size: 6
 --- !u!1 &101599368464528466
 GameObject:
   m_ObjectHideFlags: 0

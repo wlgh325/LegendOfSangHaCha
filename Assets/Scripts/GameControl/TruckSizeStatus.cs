@@ -43,6 +43,8 @@ public class TruckSizeStatus : MonoBehaviour{
         if (UserStatus.Instance.GetTruckSizeLevel() < 2) {
             FindObjectOfType<UserStatus>().TruckSizeLevelUp();
             GetComponent<UIUpdate>().unshowLevelUpStatus();
+            GameManager.Instance.SpawnTruck();
+            GameControl.Instance.updateGridLevel();
         }
     }
     public bool isLevelUp()

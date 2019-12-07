@@ -34,8 +34,7 @@ public class AuthManager : MonoBehaviour{
 
     // email, pw에 대응되는 user 정보를 가져옴
     public static FirebaseUser User;
-
-    // Start is called before the first frame update
+    
     void Start(){
         oriColor = fadeImage.color;
 
@@ -49,16 +48,20 @@ public class AuthManager : MonoBehaviour{
             }
             else{
                 IsFirebaseReady = true;
+                
                 firebaseApp = FirebaseApp.DefaultInstance;  // firebaseapp의 전체를 관리하는 object를 가져옴
                 firebaseAuth = FirebaseAuth.DefaultInstance;
             }
-
             startBtn.interactable = IsFirebaseReady;
+            
+            
+            
         }); // 현재 firebase를 구동할 수 있는 환경인지 check
+
     }
 
     public void SignIn(){
-        GameObject.Find("Btn_Start").GetComponent<Animation>().Play("btnClickAnimation");
+        //GameObject.Find("Btn_Start").GetComponent<Animation>().Play("btnClickAnimation");
         if(!IsFirebaseReady || IsSignInOnProgress || User != null){
             return;
         }
@@ -78,7 +81,6 @@ public class AuthManager : MonoBehaviour{
             }
             else{
                 User = task.Result;
-                Debug.Log(User.Email);
                 Fade();
             }
         });

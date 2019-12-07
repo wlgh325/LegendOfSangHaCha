@@ -27,12 +27,6 @@ public class BoxControl : MonoBehaviour{
     public int size;
     public static int boxNum;
     public static bool start = false;
-
-    private bool isMove = false;
-
-    BoxControl(){
-        isMove = true;
-    }
     
     void Start(){
        
