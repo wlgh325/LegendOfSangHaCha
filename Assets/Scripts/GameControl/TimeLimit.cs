@@ -48,6 +48,7 @@ public class TimeLimit : MonoBehaviour {
                             timeText.fontSize = 30;
                         }
                         else {
+                           
                             limitTime -= Time.deltaTime;
                         }
                         timeText.text = "0" + minute + ":0" + second;
@@ -61,6 +62,7 @@ public class TimeLimit : MonoBehaviour {
                 else {
                     // 게임 종료하고 점수 집계
                     FindObjectOfType<GameControl>().GameOver();
+          
                 }
                 /*
                 if(Input.GetKey(KeyCode.E)){

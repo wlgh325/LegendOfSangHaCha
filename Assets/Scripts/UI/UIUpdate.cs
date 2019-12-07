@@ -7,6 +7,10 @@ public class UIUpdate : MonoBehaviour{
 
     public GameObject levelupStatus;
 
+    private readonly int boxSizeUp = 0;
+    private readonly int truckSizeUp = 1;
+    private readonly int scoreSizeup = 2;
+
     void Awake(){
         if(levelupStatus != null){
             levelupStatus.SetActive(false);
@@ -15,8 +19,14 @@ public class UIUpdate : MonoBehaviour{
 
     public void showLevelUpStatus(){
         levelupStatus.SetActive(true);
+        levelupStatus.transform.GetChild(boxSizeUp).gameObject.SetActive(true);
     }
 
+    public void showTwoStatus()
+    {
+        levelupStatus.SetActive(true);
+        levelupStatus.transform.GetChild(boxSizeUp).gameObject.SetActive(false);
+    }
     public void unshowLevelUpStatus(){
         levelupStatus.SetActive(false);
     }
