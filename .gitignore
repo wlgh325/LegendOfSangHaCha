@@ -104,4 +104,5 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+Library/PackageCache/
 # End of https://www.gitignore.io/api/unity,windows,visualstudiocode
