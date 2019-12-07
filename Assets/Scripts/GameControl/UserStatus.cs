@@ -50,7 +50,15 @@ public class UserStatus : MonoBehaviourPunCallbacks {
         if (exp >= totalExp)
         {
             LevelUp();
-            GetComponent<UIUpdate>().showLevelUpStatus();
+            Debug.Log(truckSizeLevel);
+            Debug.Log(boxSizeLevel);
+            if(truckSizeLevel > boxSizeLevel)
+            {
+                GetComponent<UIUpdate>().showLevelUpStatus();
+            }else{
+                GetComponent<UIUpdate>().showTwoStatus();
+            }
+      
             levelText.text = "Level : " + (level + 1).ToString();            
         }
         // Debug.Log("BarValue: " + expBar.BarValue);
@@ -65,22 +73,13 @@ public class UserStatus : MonoBehaviourPunCallbacks {
     }
     public void LevelUp()
     {
+
         level += 1;
         exp -= totalExp;
         totalExp = LevelStatus.Instance.getTotalLevelExp(level);
-        ChooseAttribute();
-        PopupLevelUpEvent();
     }
 
-    private void PopupLevelUpEvent() {
 
-    }
-    public void ChooseAttribute() {
-        // 특성 선택
-        BoxSizeStatus.Instance.triggerLevelUp();
-        scoreSizeStatus.Instance.triggerLevelUp();
-        TruckSizeStatus.Instance.triggerLevelUp();
-    }
     public void SetExp(int plus)
     {
         exp += plus;

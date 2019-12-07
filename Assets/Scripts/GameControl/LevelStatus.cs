@@ -26,9 +26,8 @@ public class LevelStatus : MonoBehaviour {
     {
         //init variable
         boxSize = new int[] {9, 12, 14};  
-        truckSize = new float[] {1.0f, 1.4f, 2.0f};
         scoreSize = new float[] {1.0f, 1.4f, 2.0f}; 
-        totalLevelExp = new int[] {10, 300, 1000, 2000, 5000};
+        totalLevelExp = new int[] {10, 20, 30, 50, 70};
     }
     public float getScoreSize(int scoreSizeLevel){
         return scoreSize[scoreSizeLevel];

@@ -34,13 +34,14 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     
 
     private int[] playerScores;
-    
-    
+
+    public bool isMaster;
     private int[] BoxRange;
     public Queue<int> randomQueue = new Queue<int>();
     public GameObject truckInstance;
 
     private void Start() {
+        isMaster = PhotonNetwork.IsMasterClient;
         BoxRange = new int[] { 9, 12, 14};
         fillRandomQueue();
 
@@ -58,8 +59,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     private void Update(){
         //if (PhotonNetwork.PlayerList.Length < 2) return;
-        loadingPanel_main.gameObject.SetActive(false);
-        BoxControl.start = true;            
+        //loadingPanel_main.gameObject.SetActive(false);
+        //BoxControl.start = true;            
     }
 
     IEnumerator waitSeconds(){
@@ -115,9 +116,40 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
     }
+    public void compareScore()
+    {
+        if (isMaster)
+        {
+            //자기가 마스터 0이 높아야 이김
+            if(playerScores[0]> playerScores[1])
+            {
+                isMaster = true;
+            }
+            else
+            {
+                isMaster = false;
+            }
+        }
+        else
+        {
+            if (playerScores[0] > playerScores[1])
+            {
+                isMaster = false;
+            }
+            else
+            {
+                isMaster = true;
+            }
+        }
+    }
+    public bool getIsMaster()
+    {
+        return isMaster;
+    }
 
 
-    [PunRPC]
+
+   [PunRPC]
     private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
     {
         scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
