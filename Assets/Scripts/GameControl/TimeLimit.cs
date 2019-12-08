@@ -11,7 +11,6 @@ public class TimeLimit : MonoBehaviour {
     private bool isGameover;
 
     void Start() {
-        Debug.Log("time start");
         isGameover = false;
         limitTime = 180.0f;
     }

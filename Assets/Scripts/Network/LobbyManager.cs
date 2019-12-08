@@ -20,6 +20,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     public Color destColor;
     Color oriColor;
 
+    private string gameRoomName = "GameRoom";
+    public bool isCreatedRoom = false;
+
     // Start is called before the first frame update
     void Start(){
         oriColor = fadeImage.color;
@@ -49,7 +52,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
 
     }
 
-    
     public void Connect(){
         // 접속 시도 끝나기전에 다시 누르는것 방지
         startBtn.interactable = false;
@@ -59,6 +61,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
 
             // 빈 방으로 접속
             PhotonNetwork.JoinRandomRoom();
+
+            /*
+            if(isCreatedRoom == false){
+                Debug.Log("create room");
+                PhotonNetwork.CreateRoom(gameRoomName, new RoomOptions { MaxPlayers = 2});
+                
+            }
+            else{
+                Debug.Log("join Room");
+                PhotonNetwork.JoinRoom(gameRoomName);
+            }
+            */
         }
         else{
             // 접속 버튼 눌렀는데 갑자기 끊긴 경우
@@ -66,6 +80,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
             connectionInfoText.text = "Offline : Connection Disabled - Try reconnecting...";
             PhotonNetwork.ConnectUsingSettings();
         }
+    }
+
+    public override void OnCreatedRoom(){
+        isCreatedRoom = true;
+        connectionInfoText.text = "Success Creating Room!";
     }
 
     // 빈방이 없어서 Room에 접속하는데 실패한 경우
@@ -80,7 +99,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     // 방 접속에 성공할때 실행
     public override void OnJoinedRoom(){
         connectionInfoText.text = "Connected with Room";
+        Debug.Log("goto room");
         SceneManager.UnloadScene("LobbyScene");
-        PhotonNetwork.LoadLevel("GameScene");
+        SceneManager.LoadScene("LoadingScene");
+    }
+
+    public string getGameRoomName(){
+        return gameRoomName;
     }
 }

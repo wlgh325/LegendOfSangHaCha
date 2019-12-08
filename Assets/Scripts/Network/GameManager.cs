@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         }
     }
     public Image loadingPanel_main;
-    public Image[] loadingPanel_number;
     private static GameManager instance;
 
     public Text scoreText;
@@ -40,31 +39,82 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     public Queue<int> randomQueue = new Queue<int>();
     public GameObject truckInstance;
 
+    // time limit textUI
+    public Text timeText;
+    public float limitTime;
+    private bool isGameover;
+
     private void Start() {
+        isGameover = false;
+        limitTime = 180.0f;
+
         isMaster = PhotonNetwork.IsMasterClient;
         BoxRange = new int[] { 9, 12, 14};
-        fillRandomQueue();
-
-        if(loadingPanel_number != null){
-            for(int i=0; i<loadingPanel_number.Length; i++){
-                loadingPanel_number[i].gameObject.SetActive(false);
-            }
-        }
-        
         playerScores = new[] {0, 0};
         truckSizeLevel = 0;
+
+        fillRandomQueue();
         SpawnPlayer();
         SpawnBox();
+
+        BoxControl.start = true;
     }
 
     private void Update(){
-        //if (PhotonNetwork.PlayerList.Length < 2) return;
-        //loadingPanel_main.gameObject.SetActive(false);
-        //BoxControl.start = true;            
-    }
+        if(BoxControl.start){
+            if (!isGameover) {
+                    int minute = (int)limitTime / 60;
+                    int second = (int)(limitTime - minute * 60);
 
-    IEnumerator waitSeconds(){
-        yield return new WaitForSeconds(1);
+                    if (second >= 10)
+                    {
+                        if (limitTime < 11)
+                        {
+                            // 버닝
+                            Time.timeScale = 8.0f; // 게임 속도
+                            limitTime -= 0.125f * Time.deltaTime;
+                            timeText.color = Color.red;
+                            timeText.fontSize = 30;
+                        }
+                        else {
+                            limitTime -= Time.deltaTime;
+                        }
+                        //timeText.text = "0" + minute + ":" + second;
+                    }
+                    else
+                    {
+                         if (limitTime <= 10)
+                        {
+                            // 버닝
+                            Time.timeScale = 8.0f;
+                            limitTime -= 0.125f * Time.deltaTime;
+                            timeText.color = Color.red;
+                            timeText.fontSize = 30;
+                        }
+                        else {
+                           
+                            limitTime -= Time.deltaTime;
+                        }
+                        //timeText.text = "0" + minute + ":0" + second;
+                    }
+
+                    if (limitTime < 0)
+                    {
+                        isGameover = true;
+                    }
+                }
+                else {
+                    // 게임 종료하고 점수 집계
+                    FindObjectOfType<GameControl>().GameOver();
+          
+                }
+                /*
+                if(Input.GetKey(KeyCode.E)){
+                    expBar.value += exp;
+                }
+                */
+
+        }
     }
 
     private void SpawnPlayer(){
@@ -96,7 +146,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;
         // master이 보냄
         if(stream.IsWriting){
-            stream.SendNext(playerScores[localPlayerIndex]);
+            stream.SendNext(playerScores[localPlayerIndex % 2]);
+            stream.SendNext(limitTime);
         }
         else{
             // local에서 씀
@@ -105,8 +156,12 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             else
                 playerScores[0] = (int) stream.ReceiveNext();
             
+            limitTime = (float) stream.ReceiveNext();
+            photonView.RPC("RPCUpdateTimeText", RpcTarget.All, limitTime);
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
+
+        
     }
 
     public void AddScore(int playerNumber, int score) {
@@ -116,19 +171,17 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
         }
     }
+
+    
     public void compareScore()
     {
         if (isMaster)
         {
             //자기가 마스터 0이 높아야 이김
             if(playerScores[0]> playerScores[1])
-            {
                 isMaster = true;
-            }
             else
-            {
                 isMaster = false;
-            }
         }
         else
         {
@@ -142,17 +195,24 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             }
         }
     }
+
     public bool getIsMaster()
     {
         return isMaster;
     }
 
-
-
-   [PunRPC]
+    [PunRPC]
     private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
     {
         scoreText.text = $"{player1ScoreText} : {player2ScoreText}";
+    }
+
+    [PunRPC]
+    private void RPCUpdateTimeText(float limitTime){
+        int minute = (int)limitTime / 60;
+        int second = (int)(limitTime - minute * 60);
+
+        timeText.text = "0" + minute + ":" + second;
     }
 
     public void fillRandomQueue(){
