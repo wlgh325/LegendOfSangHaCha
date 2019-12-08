@@ -32,6 +32,11 @@ public class UserStatus : MonoBehaviourPunCallbacks {
     public ProgressBarCircle expBar;
     public Text levelText;
 
+
+    private Animator animator;
+    public FadeController fader;
+    public Image levelupWindow;
+
     void Start() {
         level = 0;
         levelText.text = "Level : " + (level + 1).ToString();
@@ -42,7 +47,10 @@ public class UserStatus : MonoBehaviourPunCallbacks {
         boxSizeLevel = 0;
         truckSizeLevel = 0;
         scoreSizeLevel  = 0;
-        //expBar.BarValue = 0.0f;
+        expBar.BarValue = 0.0f;
+
+        if(GlobalVariables.characterIndex == 0)
+            animator = GameObject.FindWithTag("Player").GetComponent<Animator>();
     }
 
     void Update() {
@@ -59,22 +67,30 @@ public class UserStatus : MonoBehaviourPunCallbacks {
       
             levelText.text = "Level : " + (level + 1).ToString();            
         }
-        // Debug.Log("BarValue: " + expBar.BarValue);
-        // Debug.Log("Exp: " + exp);
-        // Debug.Log("Total exp: " + totalExp);
-        //expBar.BarValue = (float)exp / totalExp * 100;
+
+        expBar.BarValue = Mathf.Round((float)exp / totalExp * 100);
     }
 
-    public int GetLevel()
-    {
+    IEnumerator Activate() {
+        fader.FadeIn(0.7f);
+        yield return new WaitForSeconds(2f);
+        fader.FadeOut(0.7f);
+    }
+
+    public int GetLevel(){
         return level;
     }
-    public void LevelUp()
-    {
 
+    public void LevelUp() {
         level += 1;
         exp -= totalExp;
         totalExp = LevelStatus.Instance.getTotalLevelExp(level);
+
+        if (GlobalVariables.characterIndex == 0){
+            animator.SetTrigger("levelup");
+        }
+
+        StartCoroutine(Activate());
     }
 
 
@@ -129,7 +145,6 @@ public class UserStatus : MonoBehaviourPunCallbacks {
 
         SetExp(score);
         SetCharge(score);
-        //Debug.Log(score);
     }
 
     private int CalculateScore() {

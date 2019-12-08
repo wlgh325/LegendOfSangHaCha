@@ -4,21 +4,24 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CharacterSwitch : MonoBehaviour{
+
     public Button leftBtn, rightBtn;
     public List<Transform> characterBuffer;
-
+ 
     bool updateUI;
 
-    int currentIndex = 0;
+    int currentIndex;
 
     // Start is called before the first frame update
     void Start(){
+        currentIndex = 0;
         UpdateUI();
         UpdateCharacter();
     }
 
     // Update is called once per frame
     void Update(){
+        GlobalVariables.characterIndex = currentIndex;
         if(updateUI){
             updateUI = false;
             UpdateUI();

@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     public Transform spawnPlayerPosition;
     public GameObject playerPrefab;
+    public GameObject lionPrefab;
 
     public Transform spawnBoxPosition;
     public GameObject makeBoxPrefab;
@@ -35,6 +36,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private int[] playerScores;
     private int[] BoxRange;
     public Queue<int> randomQueue = new Queue<int>();
+    
+    // Instance
     public GameObject truckInstance;
 
     // time limit textUI
@@ -116,7 +119,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     private void SpawnPlayer(){
         // Truck, boxSpawn, player character 생성
         truckInstance = Instantiate(playerTruckPrefab[truckSizeLevel], spawnTruckPosition[truckSizeLevel].position, Quaternion.identity);
-        Instantiate(playerPrefab, spawnPlayerPosition.position, Quaternion.identity);
+        Debug.Log(GlobalVariables.characterIndex);
+
         //PhotonNetwork.Instantiate(playerTruckPrefab.name, spawnTruckPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(playerPrefab.name, spawnPlayerPosition.position, Quaternion.identity);
     }
@@ -134,7 +138,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     public override void OnLeftRoom() {
         SceneManager.LoadScene("LobbyScene");
-        SceneManager.UnloadScene("GameScene");
     }
 
     // sync Method

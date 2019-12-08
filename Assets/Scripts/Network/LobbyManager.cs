@@ -99,8 +99,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     // 방 접속에 성공할때 실행
     public override void OnJoinedRoom(){
         connectionInfoText.text = "Connected with Room";
-        Debug.Log("goto room");
-        SceneManager.UnloadScene("LobbyScene");
         SceneManager.LoadScene("LoadingScene");
     }
 
