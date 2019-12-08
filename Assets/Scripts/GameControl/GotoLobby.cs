@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class GotoLobby : MonoBehaviour {
 
@@ -19,6 +20,7 @@ public class GotoLobby : MonoBehaviour {
     }
 
     public void gotoLobby(){
+        PhotonNetwork.Disconnect();
         SceneManager.LoadScene("LobbyScene");
     }
 }

@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class AnimationEditor : MonoBehaviour
 {
+    /*
     [MenuItem("Assets/Export Animation", false, 8)]
     public static void ExportSelectedAnimation()
     {
@@ -40,5 +41,6 @@ public class AnimationEditor : MonoBehaviour
         }
         AssetDatabase.SaveAssets();
     }
+    */
 
 }

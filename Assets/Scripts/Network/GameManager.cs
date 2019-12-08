@@ -135,11 +135,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         Instantiate(makeNextBoxPrefab, spawnNextBoxPosition.position, Quaternion.identity);
         //PhotonNetwork.Instantiate(makeBoxPrefab.name, spawnBoxPosition.position, Quaternion.identity);
     }
-
+/*
     public override void OnLeftRoom() {
         SceneManager.LoadScene("LobbyScene");
     }
-
+*/
     // sync Method
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info){
         var localPlayerIndex = PhotonNetwork.LocalPlayer.ActorNumber - 1;

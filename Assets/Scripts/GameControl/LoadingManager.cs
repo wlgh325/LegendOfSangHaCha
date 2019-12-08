@@ -10,8 +10,6 @@ public class LoadingManager : MonoBehaviourPunCallbacks{
     
     public Image loadingPanel_main;
 
-    public Image[] loadingPanel_number;
-
     public Button startButton;
     public Text numberTxt;
 
@@ -23,15 +21,10 @@ public class LoadingManager : MonoBehaviourPunCallbacks{
     }
 
     private void Start(){
-        
         startButton.interactable = false;
         startButton.gameObject.SetActive(false);
         numberTxt.text = PhotonNetwork.PlayerList.Length.ToString() + " / 2";
-        if(loadingPanel_number != null){
-            for(int i=0; i<loadingPanel_number.Length; i++){
-                loadingPanel_number[i].gameObject.SetActive(false);
-            }
-        }
+
     }
 
     void Update(){
@@ -53,22 +46,6 @@ public class LoadingManager : MonoBehaviourPunCallbacks{
     }
 
     public void startGame(){
-        StartCoroutine(showWaitImage());
-    }
-
-    IEnumerator showWaitImage(){
-        for(int i=0; i<loadingPanel_number.Length; i++){
-            loadingPanel_number[i].gameObject.SetActive(true);
-            yield return new WaitForSeconds(1);
-            loadingPanel_number[i].gameObject.SetActive(false);
-        }
-    
-        if(PhotonNetwork.IsMasterClient){
-            PhotonNetwork.LoadLevel("GameScene");
-        }
-    }
-
-    void OnApplicationQuit(){
-        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel("CountDownScene");
     }
 }
