@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     private int[] playerScores;
 
+    public bool isWinner;
     public bool isMaster;
     private int[] BoxRange;
     public Queue<int> randomQueue = new Queue<int>();
@@ -59,8 +60,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
     private void Update(){
         //if (PhotonNetwork.PlayerList.Length < 2) return;
-        //loadingPanel_main.gameObject.SetActive(false);
-        //BoxControl.start = true;            
+        loadingPanel_main.gameObject.SetActive(false);
+        BoxControl.start = true;            
     }
 
     IEnumerator waitSeconds(){
@@ -123,28 +124,30 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             //자기가 마스터 0이 높아야 이김
             if(playerScores[0]> playerScores[1])
             {
-                isMaster = true;
+                isWinner = true;
             }
             else
             {
-                isMaster = false;
+                isWinner = false;
             }
         }
         else
         {
             if (playerScores[0] > playerScores[1])
             {
-                isMaster = false;
+                isWinner = false;
             }
             else
             {
-                isMaster = true;
+                isWinner = true;
             }
         }
     }
-    public bool getIsMaster()
+    public bool getIsWinner()
     {
-        return isMaster;
+        compareScore();
+        Debug.Log(isWinner);
+        return isWinner;
     }
 
 
