@@ -67,4 +67,8 @@ public class LoadingManager : MonoBehaviourPunCallbacks{
             PhotonNetwork.LoadLevel("GameScene");
         }
     }
+
+    void OnApplicationQuit(){
+        PhotonNetwork.LeaveRoom();
+    }
 }

@@ -214,6 +214,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
                 Debug.Log(player1isContinue);
                  Debug.Log("Master Winner");
                  Debug.Log(player2isContinue);
+                 PhotonNetwork.LeaveRoom();
                  SceneManager.LoadScene("WinnerScene");
             }
         }else{
@@ -221,6 +222,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
                  Debug.Log(player1isContinue);
                  Debug.Log("Client Winner");
                  Debug.Log(player2isContinue);
+                 PhotonNetwork.LeaveRoom();
                  SceneManager.LoadScene("WinnerScene");
             }
         }
