@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
             }
             
             limitTime = (float) stream.ReceiveNext();
-            Debug.Log("Limit" + limitTime);
+            
             photonView.RPC("RPCUpdateTimeText", RpcTarget.All, limitTime);
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
             photonView.RPC("RPCGameOVER", RpcTarget.All,isContinue[0],isContinue[1]);

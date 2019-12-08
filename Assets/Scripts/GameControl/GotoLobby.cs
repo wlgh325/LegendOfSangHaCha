@@ -5,6 +5,11 @@ using UnityStandardAssets.CrossPlatformInput;
 using UnityEngine.SceneManagement;
 
 public class GotoLobby : MonoBehaviour {
+
+    private void Awake(){
+        Destroy(GameObject.Find("GameManager"));
+    }
+
     private void Start(){
 
     }

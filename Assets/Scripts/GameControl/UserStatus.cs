@@ -68,7 +68,8 @@ public class UserStatus : MonoBehaviourPunCallbacks {
             levelText.text = "Level : " + (level + 1).ToString();            
         }
 
-        expBar.BarValue = Mathf.Round((float)exp / totalExp * 100);
+        if(expBar != null)
+            expBar.BarValue = Mathf.Round((float)exp / totalExp * 100);
     }
 
     IEnumerator Activate() {
