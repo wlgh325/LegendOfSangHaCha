@@ -20,9 +20,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     public Color destColor;
     Color oriColor;
 
-    private string gameRoomName = "GameRoom";
-    public bool isCreatedRoom = false;
-
     // Start is called before the first frame update
     void Start(){
         oriColor = fadeImage.color;
@@ -61,18 +58,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
 
             // 빈 방으로 접속
             PhotonNetwork.JoinRandomRoom();
-
-            /*
-            if(isCreatedRoom == false){
-                Debug.Log("create room");
-                PhotonNetwork.CreateRoom(gameRoomName, new RoomOptions { MaxPlayers = 2});
-                
-            }
-            else{
-                Debug.Log("join Room");
-                PhotonNetwork.JoinRoom(gameRoomName);
-            }
-            */
         }
         else{
             // 접속 버튼 눌렀는데 갑자기 끊긴 경우
@@ -83,7 +68,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     }
 
     public override void OnCreatedRoom(){
-        isCreatedRoom = true;
         connectionInfoText.text = "Success Creating Room!";
     }
 
@@ -100,9 +84,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks{
     public override void OnJoinedRoom(){
         connectionInfoText.text = "Connected with Room";
         SceneManager.LoadScene("LoadingScene");
-    }
-
-    public string getGameRoomName(){
-        return gameRoomName;
     }
 }

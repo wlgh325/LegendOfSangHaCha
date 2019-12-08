@@ -8,8 +8,6 @@ public class UIUpdate : MonoBehaviour{
     public GameObject levelupStatus;
 
     private readonly int boxSizeUp = 0;
-    private readonly int truckSizeUp = 1;
-    private readonly int scoreSizeup = 2;
 
     void Awake(){
         if(levelupStatus != null){

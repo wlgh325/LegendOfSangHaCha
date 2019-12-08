@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:775363513389:android:1d368e2a9a253d02b4bca4",
+        "mobilesdk_app_id": "1:775363513389:android:43889b4ceaa17d00b4bca4",
         "android_client_info": {
-          "package_name": "com.GameDesign.LegendOfSangHaCha"
+          "package_name": "com.CAUCSE.LegendOfSangHaCha"
         }
       },
       "oauth_client": [
         {
-          "client_id": "775363513389-bdvj019qu8biv0gjnbh7fdscghsi6rga.apps.googleusercontent.com",
+          "client_id": "775363513389-9hvrspaapckfmh39irm578o1151tr9hr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.GameDesign.LegendOfSangHaCha",
-            "certificate_hash": "858e455bc7a02b7657398b1cd80593a2ac0bfdfa"
+            "package_name": "com.CAUCSE.LegendOfSangHaCha",
+            "certificate_hash": "db2422bd0d0737f5fe7360619d12fe50198d2672"
           }
         },
         {
