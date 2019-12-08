@@ -36,5 +36,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - RPCUpdateScoreText
   - RPCUpdateTimeText
+  - RPCGameOVER
   DisableAutoOpenWizard: 1
   ShowSettings: 0

@@ -50,8 +50,6 @@ public class UserStatus : MonoBehaviourPunCallbacks {
         if (exp >= totalExp)
         {
             LevelUp();
-            Debug.Log(truckSizeLevel);
-            Debug.Log(boxSizeLevel);
             if(truckSizeLevel > boxSizeLevel)
             {
                 GetComponent<UIUpdate>().showLevelUpStatus();

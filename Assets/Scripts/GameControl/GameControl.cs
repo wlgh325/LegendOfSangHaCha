@@ -25,7 +25,7 @@ public class GameControl : MonoBehaviour{
 
     void Start(){
         gridLevel = 0;
-        gridSizes = new int[3,3]{{9,9,11},{6,6,7},{7,7,9}};
+        gridSizes = new int[3,3]{{6,6,7},{7,7,9},{9,9,11}};
         gridWidth = gridSizes[gridLevel,0];
         gridHeight = gridSizes[gridLevel,1];
         gridDepth = gridSizes[gridLevel,2];
@@ -89,21 +89,23 @@ public class GameControl : MonoBehaviour{
         return false;
     }
 
-    public void GameOver(){
-        if (GameManager.Instance.getIsWinner())
-        {
-            SceneManager.LoadScene("WinnerScene");
-        }
-        else
-        {
-            SceneManager.LoadScene("GameOver");
-        }
-    }
     public void updateGridLevel(){
         this.gridLevel += 1;
         gridWidth = gridSizes[gridLevel, 0];
         gridHeight = gridSizes[gridLevel, 1];
         gridDepth = gridSizes[gridLevel, 2];
         grid = new Transform[gridWidth,gridHeight, gridDepth];
+    }
+
+    public void TimeOver(){
+        if (GameManager.Instance.getIsWinner())
+            SceneManager.LoadScene("WinnerScene");
+        else
+            SceneManager.LoadScene("GameOver");
+    }
+
+    public void GameOver(){
+        GameManager.Instance.isNotContinue();
+        SceneManager.LoadScene("GameOver");
     }
 }

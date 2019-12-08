@@ -6379,10 +6379,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 8268a5ba52c325d4e89b565b42c814e9,
+    m_HighlightedSprite: {fileID: 21300000, guid: 21af4a9cce1a99744ac4e89fded93484,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 8268a5ba52c325d4e89b565b42c814e9, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 8268a5ba52c325d4e89b565b42c814e9, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 21af4a9cce1a99744ac4e89fded93484, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 21af4a9cce1a99744ac4e89fded93484, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -6413,7 +6413,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 436fe7cd69891bd4daa45d02e6fa94f1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6543a3d1c95b5b444ba2446800e38926, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -22930,11 +22930,11 @@ MonoBehaviour:
   loadingPanel_main: {fileID: 1209924710}
   scoreText: {fileID: 749681774}
   spawnTruckPosition:
-  - {fileID: 295656356}
+  - {fileID: 2144373498}
   - {fileID: 109293117}
   - {fileID: 295656356}
   playerTruckPrefab:
-  - {fileID: 679334303773486595, guid: 9af457e59e754a241bee76000c3cc9c8, type: 3}
+  - {fileID: 1189161165740469983, guid: 7cac88d87988fd24c87ad61d1173b953, type: 3}
   - {fileID: 4998003186128757504, guid: 24c599e37ff28d44fb2d02467e169485, type: 3}
   - {fileID: 679334303773486595, guid: 9af457e59e754a241bee76000c3cc9c8, type: 3}
   spawnPlayerPosition: {fileID: 1257505261}
@@ -22946,11 +22946,10 @@ MonoBehaviour:
   spawnNextBoxPosition: {fileID: 1877992299}
   makeNextBoxPrefab: {fileID: 5908028963788026091, guid: 7d0eae99b390a3b409840a6fc408121b,
     type: 3}
-  isWinner: 0
-  isMaster: 0
   truckInstance: {fileID: 0}
   timeText: {fileID: 275008358}
   limitTime: 0
+  isContinue: 
 --- !u!114 &1616719376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23898,7 +23897,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 2d3565fd57f555a4caeebedff491c95e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6bba2585694f88d4ea3691c0a7505568, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23944,10 +23943,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f,
+    m_HighlightedSprite: {fileID: 21300000, guid: 3a48e309ac4bdf544b394588ce0e33dd,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: 1d644a0abdf003c459ef2f5de1c9596f, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 3a48e309ac4bdf544b394588ce0e33dd, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 3a48e309ac4bdf544b394588ce0e33dd, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -25548,7 +25547,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 7c8714abf8b40b84c98f72b1a68f77ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c6e2cda234b85444f85987e49a568d21, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -25594,10 +25593,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70,
+    m_HighlightedSprite: {fileID: 21300000, guid: 0fad543a0cd7d9246805beefa0ec7e7e,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: aaa80a6d8c2b44547a548a3fb4bb8b70, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 0fad543a0cd7d9246805beefa0ec7e7e, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 0fad543a0cd7d9246805beefa0ec7e7e, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -30139,6 +30138,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -136.1
       objectReference: {fileID: 0}
+    - target: {fileID: 8863064837095612196, guid: 32e3d951ae54bdd498c89429a9fae786,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f43cd4d87d5a53343854c9c7326e5382,
+        type: 3}
+    - target: {fileID: 8863064837880574772, guid: 32e3d951ae54bdd498c89429a9fae786,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7265ac18c04c10948a043bc042223dd5,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32e3d951ae54bdd498c89429a9fae786, type: 3}
 --- !u!224 &8863064837047853310 stripped

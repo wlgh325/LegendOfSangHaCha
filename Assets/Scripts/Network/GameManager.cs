@@ -33,9 +33,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     
 
     private int[] playerScores;
-
-    public bool isWinner;
-    public bool isMaster;
     private int[] BoxRange;
     public Queue<int> randomQueue = new Queue<int>();
     public GameObject truckInstance;
@@ -45,6 +42,10 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
     public float limitTime;
     private bool isGameover;
 
+    public bool[] isContinue;
+    private bool isWinner;
+    private bool isMaster;
+
     private void Start() {
         isGameover = false;
         limitTime = 180.0f;
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         isMaster = PhotonNetwork.IsMasterClient;
         BoxRange = new int[] { 9, 12, 14};
         playerScores = new[] {0, 0};
+        isContinue = new bool[2]{true, true};
+
         truckSizeLevel = 0;
 
         fillRandomQueue();
@@ -80,7 +83,6 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
                         else {
                             limitTime -= Time.deltaTime;
                         }
-                        //timeText.text = "0" + minute + ":" + second;
                     }
                     else
                     {
@@ -92,11 +94,9 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
                             timeText.color = Color.red;
                             timeText.fontSize = 30;
                         }
-                        else {
-                           
+                        else {  
                             limitTime -= Time.deltaTime;
                         }
-                        //timeText.text = "0" + minute + ":0" + second;
                     }
 
                     if (limitTime < 0)
@@ -106,16 +106,11 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
                 }
                 else {
                     // 게임 종료하고 점수 집계
-                    FindObjectOfType<GameControl>().GameOver();
+                    FindObjectOfType<GameControl>().TimeOver();
           
                 }
-                /*
-                if(Input.GetKey(KeyCode.E)){
-                    expBar.value += exp;
-                }
-                */
-
         }
+                        
     }
 
     private void SpawnPlayer(){
@@ -148,21 +143,26 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         // master이 보냄
         if(stream.IsWriting){
             stream.SendNext(playerScores[localPlayerIndex % 2]);
+            stream.SendNext(isContinue[localPlayerIndex % 2]);
             stream.SendNext(limitTime);
         }
         else{
             // local에서 씀
-            if(localPlayerIndex == 0)
+            if(localPlayerIndex == 0){
                 playerScores[1] = (int) stream.ReceiveNext();
-            else
+                isContinue[1] =  (bool) stream.ReceiveNext();
+            }
+            else{
                 playerScores[0] = (int) stream.ReceiveNext();
+                isContinue[0] =  (bool) stream.ReceiveNext();
+            }
             
             limitTime = (float) stream.ReceiveNext();
+            Debug.Log("Limit" + limitTime);
             photonView.RPC("RPCUpdateTimeText", RpcTarget.All, limitTime);
             photonView.RPC("RPCUpdateScoreText", RpcTarget.All, playerScores[0].ToString(), playerScores[1].ToString());
+            photonView.RPC("RPCGameOVER", RpcTarget.All,isContinue[0],isContinue[1]);
         }
-
-        
     }
 
     public void AddScore(int playerNumber, int score) {
@@ -178,34 +178,18 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
         {
             //자기가 마스터 0이 높아야 이김
             if(playerScores[0]> playerScores[1])
-            {
                 isWinner = true;
-            }
             else
-            {
                 isWinner = false;
-            }
         }
         else
         {
             if (playerScores[0] > playerScores[1])
-            {
                 isWinner = false;
-            }
             else
-            {
                 isWinner = true;
-            }
         }
     }
-    public bool getIsWinner()
-    {
-        compareScore();
-        Debug.Log(isWinner);
-        return isWinner;
-    }
-
-
 
    [PunRPC]
     private void RPCUpdateScoreText(string player1ScoreText, string player2ScoreText)
@@ -220,11 +204,44 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable{
 
         timeText.text = "0" + minute + ":" + second;
     }
-
+     [PunRPC]
+    private void RPCGameOVER(bool player1isContinue,bool player2isContinue){
+        if(getIsMaster()){
+            if(!player2isContinue){
+                Debug.Log(player1isContinue);
+                 Debug.Log("Master Winner");
+                 Debug.Log(player2isContinue);
+                 SceneManager.LoadScene("WinnerScene");
+            }
+        }else{
+            if(!player1isContinue){
+                 Debug.Log(player1isContinue);
+                 Debug.Log("Client Winner");
+                 Debug.Log(player2isContinue);
+                 SceneManager.LoadScene("WinnerScene");
+            }
+        }
+    }
     public void fillRandomQueue(){
         for(int i=0; i<10; i++){
             int j = Random.Range(0, BoxRange[UserStatus.Instance.GetBoxSizeLevel()]);
             randomQueue.Enqueue(j);
+        }
+    }
+
+    public bool getIsWinner(){
+        compareScore();
+        return isWinner;
+    }
+
+    public bool getIsMaster(){
+        return isMaster;
+    }
+    public void isNotContinue(){
+        if(getIsMaster()){
+            isContinue[0] = false;
+        }else{
+            isContinue[1] = false;
         }
     }
 }
